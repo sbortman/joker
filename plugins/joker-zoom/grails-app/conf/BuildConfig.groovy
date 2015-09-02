@@ -37,12 +37,22 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         // runtime 'mysql:mysql-connector-java:5.1.27'
+        compile 'org.webjars:toastr:2.1.1'
+        compile 'org.webjars:jquery:1.11.3'
+        compile 'org.webjars:bootstrap:3.3.5'
     }
 
     plugins {
         build(":release:3.1.1",
-              ":rest-client-builder:2.1.1") {
+              ":rest-client-builder:2.1.1",
+                ":tomcat:7.0.55.3" // or ":tomcat:8.0.22"
+        ) {
+
             export = false
         }
+        compile ":asset-pipeline:2.5.1"
     }
+
 }
+
+grails.plugin.location.mapWidget = '../../plugins/joker-map'
