@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/joker-ui.iml" filepath="$PROJECT_DIR$/joker-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/joker-ui-grailsPlugins.iml" filepath="$PROJECT_DIR$/joker-ui-grailsPlugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jokerMap-inplacePlugin.iml" filepath="$PROJECT_DIR$/jokerMap-inplacePlugin.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+/*
+*= require mapWidget
+*= require_self
+*/
+
+#map {
+    width: 1024px;
+    height: 512px;
+    margin: auto;
+    border: solid thin #255b17;
+}
