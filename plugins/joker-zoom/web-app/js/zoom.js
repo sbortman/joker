@@ -112,7 +112,7 @@ var ZoomTo = (function () {
                     lon = lonNum;
                 }
 
-                zoomTo(lat, lon);
+                MapWidget.zoomTo(lat, lon);
 
             }
             else {
@@ -160,7 +160,7 @@ var ZoomTo = (function () {
                     lon = lonNum;
                 }
 
-                zoomTo(lat, lon);
+                MapWidget.zoomTo(lat, lon);
             }
             else {
                 toastr.error('Sorry, could not locate coordinates: [' + $coordInput.val() + '] Please check the' +
@@ -249,7 +249,7 @@ var ZoomTo = (function () {
             console.log('------------<mgrsPoint>-----------');
             console.log(mgrsPoint);
             console.log('------------</mgrsPoint>----------');
-            zoomTo(mgrsPoint[1], mgrsPoint[0]);
+            MapWidget.zoomTo(mgrsPoint[1], mgrsPoint[0]);
 
             // ####################################    WIP   #####################################################
             // mgrs.inverse uses the mgrs.js library to return a bounding box.  I am leaving this code here in
