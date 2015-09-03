@@ -6,36 +6,28 @@
 // require app.js
 //= require_self
 
+/**
+ * @classdesc
+ * <p>An Openlayers 3 module for 'zooming' to a particular location on the map based on
+ * input via Decimal Degrees, Degrees Minutes Seconds, or Military Grid Reference System.</p>
+ * <hr>
+ * <p>Dependencies:</p>
+ * <ol>
+ *   <li>The mgrs.js library for parsing mgrs coordinates: https://github.com/proj4js/mgrs
+ *   <li>The feedback mechanism for errors uses toastr.js: https://github.com/CodeSeven/toastr
+ * </ol>
+ * <hr>
+ *
+ * @namespace ZoomTo
+ */
 var ZoomTo = (function () {
     "use strict";
-    // An Openlayers 3 module for 'zooming' to a particular location on the map based on
-    // input via Decimal Degrees, Degrees Minutes Seconds, or Military Grid Reference System.
-
-    // Dependencies:
-    // 1.) Openlayer3: http://openlayers.org/download/
-    // 2.) The mgrs.js library for parsing mgrs coordinates: https://github.com/proj4js/mgrs
-    // 3.) The feedback mechanism for errors uses toastr.js: https://github.com/CodeSeven/toastr
-
-    // Test coordinates in various formats
-    // TODO: move to Jasmine for testing
-    // 12356N 1234567E
-    // 12356.00N 1234567.00E
-    // 12°34'56N 123°45'67E
-    // 12°34'56.00 N 123°45'67.00 E
-    // 12°34'56.00N 3°45'67.00E
-    // 12 34 56N 123 45 67E
-    // 12:34:56 N 123:45:67 E
-    // 12:34:56.00N 123:45:67.00E
-    // 34°36'57.0"S 58°25'60.0"W (Buenos Aires)
-    // 35°32'20.2"N 82°33'55.5"W (Asheville, NC)
-    // 18S UJ 23480 06470 (Washington D.C.)
 
     // Config:
     // ********************************************************************
-    //var map = mapZoom;  // Change to your map name
-    //var zoomToLevel = 12; // Change this to desired zoom level
-
-    // Cache DOM elements.  Modify to your form element names.
+    /**
+     * Cache DOM elements.  Modify to your form element names.
+     */
     var $zoomToForm = $('#zoomToForm');
     var $zoomButton =  $('#zoomButton');
     var $coordInput = $('#coordInput');
@@ -48,23 +40,39 @@ var ZoomTo = (function () {
         lonNum,
         lonDir;
 
-    // Regular expression for the input types
+    /**
+     * @description Regular expression for the input types
+     * @type {RegExp}
+     */
     var dRegExp = /^\s*(\-?\d{1,2})\s*\u00B0?\s*([NnSs])?\s*\,?\s*(\-?\d{1,3})\s*\u00B0?\s*([WwEe])?\s*$/;
     var ddRegExp = /^\s*(\-?\d{1,2}\.\d*)\s*\u00B0?\s*([NnSs])?\s*\,?\s*(\-?\d{1,3}\.\d*)\s*\u00B0?\s*([WwEe])?\s*$/;
     var dmsRegExp = /^\s*(\d{1,2})\s*\u00B0?\s*\:?\s?(\d{1,2})\s*\'?\s*\:?\s?(\d{1,2})(\.\d*)?\s*\"?\s*([NnSs])\s*(\d{1,3})\s*\u00B0?\s*\:?\s?(\d{1,2})\s*\'?\s*\:?\s?(\d{1,2})(\.\d*)?\s*\"?\s*([EeWw])\s*$/;
     var mgrsRegExp = /^\s*(\d{1,2})\s*([A-Za-z])\s*([A-Za-z])\s*([A-Za-z])\s*(\d{1,5})\s*(\d{1,5})\s*$/;
 
-    // Bind events
+    /** Bind events */
     $zoomButton.on("click", cycleRegExs);
     $zoomToForm.keypress(suppressKey);
 
-    // Suppress <Enter> key from causing a submit behavior
+    /**
+     * Suppress <Enter> key from causing a submit behavior
+     * @function suppressKey
+     * @memberof ZoomTo
+     * @param {event} event - A keycode number
+     */
     function suppressKey (event) {
         if (event.keyCode == 10 || event.keyCode == 13){
             event.preventDefault();
         }
     }
 
+    /**
+     * Helper method used in the cycleRegExs function.  Prevents
+     * errors if the RegExp returns undefinied or NaN.
+     * @function getNum
+     * @memberof ZoomTo
+     * @param {string} val - A value from the RegExp
+     * @returns {val}
+     */
     function getNum(val) {
         if (typeof val === 'undefined'){
             return "";
@@ -75,6 +83,14 @@ var ZoomTo = (function () {
         return val;
     }
 
+    /**
+     * Cycles through the different coordinate types, and calls
+     * the ZoomTo method on the MapWidget module to recenter and
+     * set zoom level from the input coordinates.
+     * @function cycleRegExs
+     * @memberof ZoomTo
+     * @fires MapWidget.zoomTo
+     */
     function cycleRegExs() {
 
         var coordInput = $coordInput.val();
@@ -244,7 +260,7 @@ var ZoomTo = (function () {
             //console.log('mgrs5: ' + mgrs5);
             //console.log('mgrs6: ' + mgrs6);
 
-            // Using mgrs.js toPoint, and then using the zoomTo (set at zoom level 12):
+            // Using mgrs.js toPoint, and then using the zoomTo:
             var mgrsPoint = mgrs.toPoint(mgrs1+mgrs2+mgrs3+mgrs4+mgrs5+mgrs6);
             console.log('------------<mgrsPoint>-----------');
             console.log(mgrsPoint);
@@ -283,6 +299,16 @@ var ZoomTo = (function () {
         }
     }
 
+    /**
+     * Converts degrees minutes seconds to decimal degrees
+     * @function dmsToDd
+     * @memberof ZoomTo
+     * @param {number} degrees - Degrees
+     * @param {number} minutes - Minutes
+     * @param {number} seconds - Seconds
+     * @param {number} position - Position
+     * @returns {number}
+     */
     function dmsToDd (degrees, minutes, seconds, position) {
 
         var dd = Math.abs(degrees) + Math.abs(minutes / 60) + Math.abs(seconds / 3600);
@@ -294,11 +320,10 @@ var ZoomTo = (function () {
         return dd;
     }
 
-    // function initialize (initParams) {
-
-    // }
-
-    // Parameters for the toastr banner
+    /**
+     * toastr.js parameters for the banners
+     * @type {{closeButton: boolean, progressBar: boolean, positionClass: string, showMethod: string, hideMethod: string, timeOut: string}}
+     */
     toastr.options = {
         "closeButton": true,
         "progressBar": true,
@@ -308,10 +333,5 @@ var ZoomTo = (function () {
         "timeOut": "10000"
     };
 
-    // return {
-
-    //     initialize: initialize
-
-    // };
 
 })();
