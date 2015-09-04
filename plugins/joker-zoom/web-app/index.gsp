@@ -9,13 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <title>Zoom To</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.7.0/ol.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" type="text/css">
-
+    <asset:stylesheet src="zoom.css"/>
 </head>
 <body>
 <div class="row-fluid">
@@ -31,6 +26,7 @@
             </div>
         </form>
         <div id="map" class="map"></div>
+        <p>test fdsfdf</p>
     </div>
 </div>
 

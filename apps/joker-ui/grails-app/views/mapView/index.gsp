@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title></title>
+    <title>OMAR2</title>
     <asset:stylesheet src="mapView.css"/>
 </head>
 
