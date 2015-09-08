@@ -1,11 +1,3 @@
-//= require webjars/jquery/1.11.3/jquery.js
-//= require webjars/toastr/2.1.1/toastr.js
-//= require webjars/bootsrap/3.3.5/js/bootstrap.js
-//= require mapWidget.js
-//= require mgrs.js
-// require app.js
-//= require_self
-
 /**
  * @classdesc
  * <p>An Openlayers 3 module for 'zooming' to a particular location on the map based on
@@ -22,6 +14,19 @@
  */
 var ZoomTo = (function () {
     "use strict";
+
+    //function foo(){
+    //    return 1;
+    //}
+    //
+    //function bar(param){
+    //    return param;
+    //}
+
+    //function fire(){
+    //    console.log('testing...');
+    //    return 'testing';
+    //}
 
     // Config:
     // ********************************************************************

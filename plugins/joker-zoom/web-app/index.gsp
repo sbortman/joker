@@ -26,11 +26,10 @@
             </div>
         </form>
         <div id="map" class="map"></div>
-        <p>test fdsfdf</p>
     </div>
 </div>
 
-<asset:javascript src="zoom.js"/>
+<asset:javascript src="app.js"/>
 <asset:script>
     $(document).ready(function(){
 

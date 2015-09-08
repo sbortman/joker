@@ -1,22 +1,11 @@
 /**
- * Created by adrake on 9/2/15.
+ * Created by adrake on 9/4/15.
  */
-// Set up the ol3 map
 
-var mapView = new ol.View({
-    center: [0, 0],
-    zoom: 2
-});
-var mapZoom = new ol.Map({
-    layers: [
-        new ol.layer.Tile({
-            source: new ol.source.OSM()
-        })],
-    controls: ol.control.defaults({
-        attributionOptions: ({
-            collapsible: false
-        })
-    }),
-    target: 'map',
-    view: mapView
-});
+//= require webjars/jquery/1.11.3/jquery.js
+//= require webjars/toastr/2.1.1/toastr.js
+//= require webjars/bootsrap/3.3.5/js/bootstrap.js
+//= require mapWidget.js
+//= require mgrs.js
+//= require zoom.js
+//= require_self
