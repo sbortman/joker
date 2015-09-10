@@ -38,7 +38,8 @@ grails.project.dependency.resolution = {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
     // runtime 'mysql:mysql-connector-java:5.1.27'
     compile 'org.webjars:openlayers:3.8.2'
-    compile
+    compile 'org.webjars:jquery:1.11.3'
+    compile 'org.webjars:bootstrap:3.3.5'
   }
 
   plugins {
@@ -51,7 +52,6 @@ grails.project.dependency.resolution = {
     }
 
     compile ":asset-pipeline:2.5.1"
-
-    runtime ":jquery:1.11.1"
+    //runtime ":jquery:1.11.1"
   }
 }

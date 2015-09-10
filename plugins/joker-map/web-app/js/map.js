@@ -1,41 +1,31 @@
 /**
- * Created by sbortman on 9/2/15.
+ * @classdesc
+ * <p>An Openlayers 3 module for creating a map.</p>
+ * <hr>
+ *
+ * @namespace Map
+ * @returns {init}
  */
-//= require webjars/openlayers/3.8.2/ol.js
-//= require_self
+var Map = (function () {
 
-var MapWidget = (function ()
-{
     'use strict';
+
+    //function foo(){
+    //    return 1;
+    //}
+    //
+    //function bar(param){
+    //    return param;
+    //}
+
     var map;
     var zoomToLevel = 12; // Change this to desired zoom level
-    function init()
-    {
-        //layers = [
-        //    new ol.layer.Tile( {
-        //        source: new ol.source.TileWMS( {
-        //            url: 'http://demo.boundlessgeo.com/geoserver/wms',
-        //            params: {
-        //                'LAYERS': 'ne:NE1_HR_LC_SR_W_DR'
-        //            }
-        //        } )
-        //    } )
-        //];
-        //
-        //map = new ol.Map( {
-        //    controls: ol.control.defaults().extend( [
-        //        new ol.control.ScaleLine( {
-        //            units: 'degrees'
-        //        } )
-        //    ] ),
-        //    layers: layers,
-        //    target: 'map',
-        //    view: new ol.View( {
-        //        projection: 'EPSG:4326',
-        //        center: [0, 0],
-        //        zoom: 2
-        //    } )
-        //} );
+
+    /**
+     * @function init
+     * @memberof Map
+     */
+    function init() {
 
         var mapView = new ol.View({
             center: [0, 0],
@@ -57,9 +47,19 @@ var MapWidget = (function ()
 
     }
 
+    // TODO: Add this to a pubsub pattern
+    /**
+     * Add the ability to move and zoom the map
+     * to a certain location via a latitude and
+     * longitude
+     * @function zoomTo
+     * @memberof Map
+     * @param {number} lat - Latitude
+     * @param {number} lon - Longitude
+     */
     function zoomTo(lat, lon) {
 
-        var start = + new Date();
+        var start = +new Date();
         var pan = ol.animation.pan({
             duration: 750,
             source: (map.getView().getCenter()),
@@ -70,7 +70,7 @@ var MapWidget = (function ()
             resolution: map.getView().getResolution()
         });
 
-        map.beforeRender(zoom,pan);
+        map.beforeRender(zoom, pan);
         map.getView().setCenter(ol.proj.transform([parseFloat(lon), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'));
         map.getView().setZoom(zoomToLevel);
 
@@ -80,4 +80,5 @@ var MapWidget = (function ()
         init: init,
         zoomTo: zoomTo
     }
+
 })();

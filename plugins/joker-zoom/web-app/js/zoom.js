@@ -14,18 +14,12 @@
  */
 var ZoomTo = (function () {
     "use strict";
-
     //function foo(){
     //    return 1;
     //}
     //
     //function bar(param){
     //    return param;
-    //}
-
-    //function fire(){
-    //    console.log('testing...');
-    //    return 'testing';
     //}
 
     // Config:
@@ -90,14 +84,13 @@ var ZoomTo = (function () {
 
     /**
      * Cycles through the different coordinate types, and calls
-     * the ZoomTo method on the MapWidget module to recenter and
+     * the ZoomTo method on the Map module to recenter and
      * set zoom level from the input coordinates.
      * @function cycleRegExs
      * @memberof ZoomTo
-     * @fires MapWidget.zoomTo
+     * @fires Map.zoomTo
      */
     function cycleRegExs() {
-
         var coordInput = $coordInput.val();
         coordInput.trim();
 
@@ -133,7 +126,7 @@ var ZoomTo = (function () {
                     lon = lonNum;
                 }
 
-                MapWidget.zoomTo(lat, lon);
+                Map.zoomTo(lat, lon);
 
             }
             else {
@@ -181,7 +174,7 @@ var ZoomTo = (function () {
                     lon = lonNum;
                 }
 
-                MapWidget.zoomTo(lat, lon);
+                Map.zoomTo(lat, lon);
             }
             else {
                 toastr.error('Sorry, could not locate coordinates: [' + $coordInput.val() + '] Please check the' +
@@ -229,7 +222,7 @@ var ZoomTo = (function () {
 
                 lat = dmsToDd(latDeg, latMin, latSec, latHem);
                 lon = dmsToDd(lonDeg, lonMin, lonSec, lonHem);
-                MapWidget.zoomTo(lat, lon);
+                Map.zoomTo(lat, lon);
 
             }
             else {
@@ -270,7 +263,7 @@ var ZoomTo = (function () {
             console.log('------------<mgrsPoint>-----------');
             console.log(mgrsPoint);
             console.log('------------</mgrsPoint>----------');
-            MapWidget.zoomTo(mgrsPoint[1], mgrsPoint[0]);
+            Map.zoomTo(mgrsPoint[1], mgrsPoint[0]);
 
             // ####################################    WIP   #####################################################
             // mgrs.inverse uses the mgrs.js library to return a bounding box.  I am leaving this code here in
