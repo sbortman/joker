@@ -9,21 +9,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Demo | ZoomTo</title>
-    <asset:stylesheet src="manifest-zoom.css"/>
+    <title>Demo | Search</title>
+    <asset:stylesheet src="manifest-search.css"/>
 </head>
 <body>
     <div class="container-fluid">
         <header>
-            <h1 class="alert alert-success">Demo | ZoomTo</h1>
+            <h1 class="alert alert-success">Demo | Search</h1>
         </header>
     </div>
     <div class="row-fluid">
         <div class="span12">
-            <form role="search" style="position: absolute; left: 40px; top: 120px; width: 300px;" id="zoomToForm">
+            <form role="search" style="position: absolute; left: 40px; top: 120px; width: 300px;" id="searchForm">
                 <div class="form-group">
                     <div class="input-group" id="zoom-input-group">
-                        <input class="form-control" id="coordInput" style="box-shadow: 0px 5px 5px #808080; z-index: 9999" type="text" placeholder="Search by coordinates">
+                        <input class="form-control" id="searchInput" style="box-shadow: 0px 5px 5px #808080; z-index:
+                        9999" type="text" placeholder="Search by place name">
                         <div class="input-group-btn">
                             <button id="zoomButton" class="btn btn-primary" style="box-shadow: 0px 6px 5px #808080;" type="button"><i class="glyphicon glyphicon-search"></i></button>
                         </div>
@@ -34,7 +35,7 @@
         </div>
     </div>
 
-<asset:javascript src="manifest-zoom.js"/>
+<asset:javascript src="manifest-search.js"/>
 <asset:script>
     $(document).ready(function(){
         Map.init();

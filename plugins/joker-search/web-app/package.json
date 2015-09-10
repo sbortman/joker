@@ -1,0 +1,21 @@
+{
+  "name": "zoom",
+  "version": "1.0.0",
+  "description": "A OL3 based zoomTo module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Zoom",
+    "OL3"
+  ],
+  "author": "Aaron Drake",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-open": "^1.0.0",
+    "gulp-run": "^1.6.10",
+    "jsdoc": "^3.3.2"
+  }
+}

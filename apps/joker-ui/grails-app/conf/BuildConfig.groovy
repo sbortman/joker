@@ -79,3 +79,4 @@ grails.project.dependency.resolution = {
 
 grails.plugin.location.jokerMap = '../../plugins/joker-map'
 grails.plugin.location.jokerZoom = '../../plugins/joker-zoom'
+grails.plugin.location.jokerSearch = '../../plugins/joker-search'
