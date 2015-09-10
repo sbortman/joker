@@ -20,7 +20,7 @@ describe("jasmine-test-injector", function() {
 // setup $inject to use jasmine
 $inject.use.jasmine();
 
-$inject("http://localhost:8080/joker-zoom/assets/search.js", function() {
+$inject("http://localhost:8080/joker-search/assets/search.js", function() {
     "use strict";
 
     // Suite

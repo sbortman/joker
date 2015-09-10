@@ -79,6 +79,6 @@ var Map = (function () {
     return {
         init: init,
         zoomTo: zoomTo
-    }
+    };
 
 })();

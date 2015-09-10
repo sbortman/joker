@@ -15,18 +15,18 @@ var config = {
         js: 'js/*.js',
         css: 'css/*.css'
     }
-}
+};
 
 gulp.task('open', function(){
     setTimeout(function(){
         gulp.src('')
-            .pipe(open({uri: 'http://localhost:' + config.port + '/' + config.appName}))
+            .pipe(open({uri: 'http://localhost:' + config.port + '/' + config.appName}));
     }, 1000);
 
 });
 
 gulp.task('create-docs', function(){
-    run('./node_modules/.bin/jsdoc js/map.js').exec()
+    run('./node_modules/.bin/jsdoc js/map.js').exec();
 });
 
 gulp.task('watch', function() {

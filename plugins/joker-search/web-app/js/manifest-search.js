@@ -4,5 +4,6 @@
 
 //= require manifest-map.js
 //= require map.js
+//= require search.js
 
 //= require_self

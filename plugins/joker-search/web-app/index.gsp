@@ -35,13 +35,13 @@
         </div>
     </div>
 
-<asset:javascript src="manifest-search.js"/>
-<asset:script>
-    $(document).ready(function(){
-        Map.init();
-    });
-</asset:script>
-<asset:deferredScripts/>
+    <asset:javascript src="manifest-search.js"/>
+    <asset:script>
+        $(document).ready(function(){
+            Map.init();
+        });
+    </asset:script>
+    <asset:deferredScripts/>
 
 </body>
 </html>
