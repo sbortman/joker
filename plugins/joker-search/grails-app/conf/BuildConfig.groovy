@@ -41,6 +41,7 @@ grails.project.dependency.resolution = {
         compile 'org.webjars:jquery:1.11.3'
         compile 'org.webjars:bootstrap:3.3.5'
         compile 'org.webjars.bower:devbridge-autocomplete:1.2.21'
+        compile 'org.webjars:bootstrap-select:1.7.3-1'
 
     }
 
@@ -51,6 +52,7 @@ grails.project.dependency.resolution = {
         }
 
         compile ":asset-pipeline:2.5.1"
+        compile ":es6to5-asset-pipeline:0.4"
     }
 }
 

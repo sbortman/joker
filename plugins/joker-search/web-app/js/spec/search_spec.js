@@ -26,13 +26,21 @@ $inject("http://localhost:8080/joker-search/assets/search.js", function() {
     // Suite
     describe("search.js tests", function() {
 
-        // Test
-        it("the foo function should return a value === 1", function () {
-            expect(foo()).toEqual(1);
+        //// Test
+        //it("the foo function should return a value === 1", function () {
+        //    expect(foo()).toEqual(1);
+        //});
+        //
+        //it("the bar function should return the passed parameter", function () {
+        //    expect(bar('Going Back to Tally!')).toEqual('Going Back to Tally!');
+        //});
+
+        it("the changeSearchType function should return that it fired", function(){
+            expect(changeSearchType()).toEqual('changeSearchType fired');
         });
 
-        it("the bar function should return the passed parameter", function () {
-            expect(bar('Going Back to Tally!')).toEqual('Going Back to Tally!');
+        it("the searchPlace function should return that it fired", function(){
+            expect(searchPlace()).toEqual('searchPlace fired');
         });
 
     });

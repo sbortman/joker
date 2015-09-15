@@ -20,13 +20,22 @@
     </div>
     <div class="row-fluid">
         <div class="span12">
-            <form role="search" style="position: absolute; left: 40px; top: 120px; width: 300px;" id="searchForm">
+            <form id="searchForm" role="search">
                 <div class="form-group">
-                    <div class="input-group" id="zoom-input-group">
-                        <input class="form-control" id="searchInput" style="box-shadow: 0px 5px 5px #808080; z-index:
-                        9999" type="text" placeholder="Search by place name">
+                    <div class="input-group">
                         <div class="input-group-btn">
-                            <button id="zoomButton" class="btn btn-primary" style="box-shadow: 0px 6px 5px #808080;" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                        <select id="searchSelect" class="form-control selectpicker"  data-style="btn-primary">
+                            <option data-icon="glyphicon-map-marker" value="place">&nbsp;&nbsp;Place&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            <option data-icon="glyphicon glyphicon-screenshot" value="coordinate">&nbsp;&nbsp;Coordinate&nbsp;&nbsp;</option>
+                            <option data-icon="glyphicon glyphicon-picture" value="imageId">&nbsp;&nbsp;Image
+                            ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            <option data-icon="glyphicon glyphicon-pushpin" value="beNum">&nbsp;&nbsp;B.E. Number&nbsp;</option>
+                        </select>
+                        </div>
+                        <input id="searchInput" class="form-control typeahead" type="text" placeholder=""
+                           value="">
+                        <div class="input-group-btn">
+                            <button id="searchButton" class="btn btn-primary" type="button">&nbsp;&nbsp;Search</button>
                         </div>
                     </div>
                 </div>
@@ -42,6 +51,7 @@
         });
     </asset:script>
     <asset:deferredScripts/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.js"></script>
 
 </body>
 </html>
