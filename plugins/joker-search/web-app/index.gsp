@@ -32,7 +32,7 @@
                             <option data-icon="glyphicon glyphicon-pushpin" value="beNum">&nbsp;&nbsp;B.E. Number&nbsp;</option>
                         </select>
                         </div>
-                        <input id="searchInput" class="form-control typeahead" type="text" placeholder=""
+                        <input id="searchInput" class="form-control" type="text" placeholder=""
                            value="">
                         <div class="input-group-btn">
                             <button id="searchButton" class="btn btn-primary" type="button">&nbsp;&nbsp;Search</button>
@@ -51,7 +51,6 @@
         });
     </asset:script>
     <asset:deferredScripts/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.js"></script>
 
 </body>
 </html>

@@ -10,6 +10,7 @@
 var Search = (function () {
     "use strict";
 
+    // jasmine test functions
     //function foo(){
     //    return 1;
     //}
@@ -26,7 +27,9 @@ var Search = (function () {
 
     // bind events
     $searchSelect.on('change', changeSearchType);
-    $searchButton.on('click', searchPlace);
+    //$searchButton.on('click', searchByPlace(););
+
+    searchByPlace();
 
     function changeSearchType() {
 
@@ -34,17 +37,20 @@ var Search = (function () {
 
         switch (searchType){
             case 'place':
-                console.log('place selected');
-                // searchPlace();
+                $searchInput.val('');
+                $searchInput.autocomplete('enable');
                 break;
             case 'coordinate':
-                console.log('coordinate selected');
+                $searchInput.val('');
+                $searchInput.autocomplete('disable');
                 break;
             case 'imageId':
-                console.log('imageId selected');
+                $searchInput.val('');
+                $searchInput.autocomplete('disable');
                 break;
             case'beNum':
-                console.log('beNum selected');
+                $searchInput.val('');
+                $searchInput.autocomplete('disable');
                 break;
             default: console.log('nothing selected');
         }
@@ -52,37 +58,52 @@ var Search = (function () {
         return 'changeSearchType fired';
     }
 
-    function searchPlace() {
+    // ############################################################################
+    // TODO: Pubsub pattern
+    // ############################################################################
 
-        return 'searchPlace fired';
-
+    function searchByPlace(){
+        console.log('place selected');
+        var url = 'http://localhost/twofish/?autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED';
+        $searchInput.autocomplete({
+            serviceUrl: url,
+            dataType: 'json',
+            type: 'GET',
+            transformResult: function(response) {
+                console.log('response', response);
+                return {
+                    suggestions: $.map(response.interpretations, function(dataItem){
+                        //console.log('value: ' + dataItem.feature.displayName + ' data: ' + dataItem.feature.displayName);
+                        return {
+                            value: dataItem.feature.displayName,
+                            data: dataItem.feature.displayName,
+                            lat: dataItem.feature.geometry.center.lat,
+                            lng: dataItem.feature.geometry.center.lng,
+                            bounds: dataItem.feature.geometry.bounds
+                        };
+                    })
+                };
+            },
+            onSelect: function (suggestion) {
+                //console.log('You selected: ' + suggestion.value + ', \n' + suggestion.lat + ', \n' + suggestion.lng);
+                console.log('suggestion', suggestion)
+                Map.zoomTo(suggestion.lat, suggestion.lng);
+                Map.zoomToExt(suggestion.bounds);
+            }
+        });
     }
 
-    var url = 'http://localhost/twofish/?autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED';
-    $searchInput.autocomplete({
-        serviceUrl: url,
-        dataType: 'json',
-        type: 'GET',
-        transformResult:function(response, originalQuery) {
-            console.log('response', response);
-            return {
-                suggestions: $.map(response.interpretations, function(dataItem){
-                    console.log('value: ' + dataItem.feature.displayName + ' data: ' + dataItem.feature.displayName);
-                    return {
-                        value: dataItem.feature.displayName,
-                        data: dataItem.feature.displayName,
-                        lat: dataItem.feature.geometry.center.lat,
-                        lng: dataItem.feature.geometry.center.lng
-                    };
-                })
-            };
-        },
-        onSelect: function (suggestion) {
-            //alert('You selected: ' + suggestion.value + ', \n' + suggestion.lat + ', \n' + suggestion.lng);
-            //console.log(suggestion.lat, suggestion.lng);
-            Map.zoomTo(suggestion.lat, suggestion.lng);
-        }
-    });
+    function searchByCoordinates(){
+        console.log('coordinate selected');
+    }
+
+    function searchByImageId(){
+        console.log('imageId selected');
+    }
+
+    function searchByBeNum(){
+        console.log('beNum selected');
+    }
 
     //return {
     //    // If needed...

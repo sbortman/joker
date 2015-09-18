@@ -7,6 +7,5 @@
 //= require manifest-map.js
 //= require map.js
 //= require search.js
-//= require countries.js
 
 //= require_self

@@ -20,6 +20,7 @@ var Map = (function () {
 
     var map;
     var zoomToLevel = 12; // Change this to desired zoom level
+    var searchLayerVector;
 
     /**
      * @function init
@@ -44,6 +45,12 @@ var Map = (function () {
             target: 'map',
             view: mapView
         });
+
+        searchLayerVector = new ol.layer.Vector({
+            source: new ol.source.Vector()
+        });
+
+        map.addLayer(searchLayerVector);
 
     }
 
@@ -74,11 +81,41 @@ var Map = (function () {
         map.getView().setCenter(ol.proj.transform([parseFloat(lon), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'));
         map.getView().setZoom(zoomToLevel);
 
+        //TODO: Add a marker to the map
+
+    }
+    // TODO: Add JSDoc comment
+    function zoomToExt(inputExtent) {
+        console.log('ne.lat', inputExtent.ne.lat);
+        console.log('ne.lng', inputExtent.ne.lng);
+        console.log('sw.lat', inputExtent.sw.lat);
+        console.log('sw.lng', inputExtent.sw.lng);
+
+        var neFeature = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.transform([inputExtent.ne.lng, inputExtent.ne.lat], 'EPSG:4326', 'EPSG:3857'))
+        });
+
+        var swFeature = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.transform([inputExtent.sw.lng, inputExtent.sw.lat], 'EPSG:4326', 'EPSG:3857'))
+        });
+
+        console.log('neFeature', neFeature);
+        console.log('swFeature', swFeature);
+
+        searchLayerVector.getSource().addFeatures([neFeature, swFeature]);
+        console.log('searchLayerVector', searchLayerVector.getSource().getFeatures());
+
+        var searchItemExtent = searchLayerVector.getSource().getExtent();
+        map.getView().fit(searchItemExtent, map.getSize());
+
+        searchLayerVector.getSource().clear();
+
     }
 
     return {
         init: init,
-        zoomTo: zoomTo
+        zoomTo: zoomTo,
+        zoomToExt: zoomToExt
     };
 
 })();
