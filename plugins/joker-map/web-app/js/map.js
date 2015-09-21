@@ -1,6 +1,6 @@
 /**
  * @classdesc
- * <p>An Openlayers 3 module for creating a map.</p>
+ * <p>An Openlayers 3 module for creating a map</p>
  * <hr>
  *
  * @namespace Map
@@ -19,8 +19,9 @@ var Map = (function () {
     //}
 
     var map;
-    var zoomToLevel = 12; // Change this to desired zoom level
+    var zoomToLevel = 14; // Change this to desired zoom level
     var searchLayerVector;
+    var iconStyle;
 
     /**
      * @function init
@@ -52,19 +53,61 @@ var Map = (function () {
 
         map.addLayer(searchLayerVector);
 
+        iconStyle = new ol.style.Style({
+            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                opacity: 0.75,
+                src: 'assets/search_marker_green.png'
+            }))
+        });
+
     }
 
-    // TODO: Add this to a pubsub pattern
     /**
-     * Add the ability to move and zoom the map
-     * to a certain location via a latitude and
-     * longitude
-     * @function zoomTo
+     * Clear a layer's source, and
+     * remove all features
+     * @function clearLayerSource
+     * @memberof Map
+     * @param {layer} layer - layer
+     */
+    function clearLayerSource(layer){
+        if (layer.getSource().getFeatures().length >=1 ){
+            console.log('We have features...remove them...');
+            layer.getSource().clear();
+        }
+    }
+
+    /**
+     * Add a marker to the map
+     * at a specified point.  Clears
+     * previous instance of a maker
+     * if they exist before placing
+     * a new one
+     * @function addMarker
      * @memberof Map
      * @param {number} lat - Latitude
      * @param {number} lon - Longitude
+     * @param {layer} layer - layer
      */
-    function zoomTo(lat, lon) {
+    function addMarker(lat, lon, layer){
+
+        clearLayerSource(layer);
+        var centerFeature = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.transform([parseFloat(lon), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'))
+        });
+        centerFeature.setStyle(iconStyle);
+        layer.getSource().addFeatures([centerFeature]);
+    }
+
+    /**
+     * Animates the pan and zoom for
+     * the map
+     * @function zoomAnimate
+     * @memberof Map
+     */
+    function zoomAnimate(){
 
         var start = +new Date();
         var pan = ol.animation.pan({
@@ -78,37 +121,57 @@ var Map = (function () {
         });
 
         map.beforeRender(zoom, pan);
+    }
+
+    /**
+     * Move and zoom the map to a
+     * certain location via a latitude
+     * and longitude
+     * @function zoomTo
+     * @memberof Map
+     * @param {number} lat - Latitude
+     * @param {number} lon - Longitude
+     */
+    function zoomTo(lat, lon) {
+
+        zoomAnimate();
         map.getView().setCenter(ol.proj.transform([parseFloat(lon), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'));
         map.getView().setZoom(zoomToLevel);
-
-        //TODO: Add a marker to the map
+        addMarker(parseFloat(lat),parseFloat(lon), searchLayerVector);
 
     }
-    // TODO: Add JSDoc comment
+
+    /**
+     * Move and zoom the map to a
+     * certain location via a latitude
+     * and longitude
+     * @function zoomToExt
+     * @memberof Map
+     * @param {obj} inputExtent - inputExtent
+     */
     function zoomToExt(inputExtent) {
-        console.log('ne.lat', inputExtent.ne.lat);
-        console.log('ne.lng', inputExtent.ne.lng);
-        console.log('sw.lat', inputExtent.sw.lat);
-        console.log('sw.lng', inputExtent.sw.lng);
+
+        clearLayerSource(searchLayerVector);
 
         var neFeature = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.transform([inputExtent.ne.lng, inputExtent.ne.lat], 'EPSG:4326', 'EPSG:3857'))
+            geometry: new ol.geom.Point(ol.proj.transform([inputExtent.bounds.ne.lng, inputExtent.bounds.ne.lat], 'EPSG:4326', 'EPSG:3857'))
         });
 
         var swFeature = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.transform([inputExtent.sw.lng, inputExtent.sw.lat], 'EPSG:4326', 'EPSG:3857'))
+            geometry: new ol.geom.Point(ol.proj.transform([inputExtent.bounds.sw.lng, inputExtent.bounds.sw.lat], 'EPSG:4326', 'EPSG:3857'))
         });
 
-        console.log('neFeature', neFeature);
-        console.log('swFeature', swFeature);
-
         searchLayerVector.getSource().addFeatures([neFeature, swFeature]);
-        console.log('searchLayerVector', searchLayerVector.getSource().getFeatures());
 
         var searchItemExtent = searchLayerVector.getSource().getExtent();
+
+        zoomAnimate();
+
         map.getView().fit(searchItemExtent, map.getSize());
 
-        searchLayerVector.getSource().clear();
+        searchLayerVector.getSource().clear(); // Clean up the searchLayer extent for the next query
+
+        addMarker(inputExtent.lat, inputExtent.lng, searchLayerVector);
 
     }
 

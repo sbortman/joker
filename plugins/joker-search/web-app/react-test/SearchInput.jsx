@@ -56,7 +56,7 @@ var SearchInput = React.createClass({
             },
             onSelect: function (suggestion) {
                 console.log('You selected: ' + suggestion.value + ', \n' + suggestion.lat + ', \n' + suggestion.lng);
-                //Map.zoomTo(suggestion.lat, suggestion.lng);
+                Map.zoomTo(suggestion.lat, suggestion.lng);
             }
         });
     },

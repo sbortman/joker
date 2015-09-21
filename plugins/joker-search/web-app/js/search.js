@@ -63,17 +63,19 @@ var Search = (function () {
     // ############################################################################
 
     function searchByPlace(){
-        console.log('place selected');
+        //console.log('place selected');
         var url = 'http://localhost/twofish/?autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED';
         $searchInput.autocomplete({
             serviceUrl: url,
             dataType: 'json',
             type: 'GET',
             transformResult: function(response) {
-                console.log('response', response);
+                //console.log('response', response);
                 return {
                     suggestions: $.map(response.interpretations, function(dataItem){
-                        //console.log('value: ' + dataItem.feature.displayName + ' data: ' + dataItem.feature.displayName);
+                        //console.log(dataItem);
+                        //console.log('value: ' + dataItem.feature.displayName + ' data: ' +
+                        // dataItem.feature.displayName);
                         return {
                             value: dataItem.feature.displayName,
                             data: dataItem.feature.displayName,
@@ -86,9 +88,16 @@ var Search = (function () {
             },
             onSelect: function (suggestion) {
                 //console.log('You selected: ' + suggestion.value + ', \n' + suggestion.lat + ', \n' + suggestion.lng);
-                console.log('suggestion', suggestion)
-                Map.zoomTo(suggestion.lat, suggestion.lng);
-                Map.zoomToExt(suggestion.bounds);
+                //console.log('suggestion', suggestion);
+
+                if (suggestion.bounds === undefined){
+                    console.log('bounds is undefined!');
+                    Map.zoomTo(suggestion.lat, suggestion.lng);
+                }
+                else{
+                    Map.zoomToExt(suggestion);
+                }
+
             }
         });
     }
