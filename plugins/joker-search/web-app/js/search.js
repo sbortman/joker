@@ -64,13 +64,13 @@ var Search = (function () {
 
     function searchByPlace(){
         //console.log('place selected');
-        var url = 'http://localhost/twofish/?autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED';
+        var url = 'http://localhost/twofish/?responseIncludes=WKT_GEOMETRY_SIMPLIFIED&autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED';
         $searchInput.autocomplete({
             serviceUrl: url,
             dataType: 'json',
             type: 'GET',
             transformResult: function(response) {
-                //console.log('response', response);
+                console.log('response', response);
                 return {
                     suggestions: $.map(response.interpretations, function(dataItem){
                         //console.log(dataItem);
@@ -81,17 +81,18 @@ var Search = (function () {
                             data: dataItem.feature.displayName,
                             lat: dataItem.feature.geometry.center.lat,
                             lng: dataItem.feature.geometry.center.lng,
-                            bounds: dataItem.feature.geometry.bounds
+                            bounds: dataItem.feature.geometry.bounds,
+                            wkt: dataItem.feature.geometry.wktGeometrySimplified
                         };
                     })
                 };
             },
             onSelect: function (suggestion) {
                 //console.log('You selected: ' + suggestion.value + ', \n' + suggestion.lat + ', \n' + suggestion.lng);
-                //console.log('suggestion', suggestion);
+                console.log('suggestion', suggestion);
 
                 if (suggestion.bounds === undefined){
-                    console.log('bounds is undefined!');
+                    //console.log('bounds is undefined!');
                     Map.zoomTo(suggestion.lat, suggestion.lng);
                 }
                 else{

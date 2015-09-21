@@ -171,7 +171,35 @@ var Map = (function () {
 
         searchLayerVector.getSource().clear(); // Clean up the searchLayer extent for the next query
 
-        addMarker(inputExtent.lat, inputExtent.lng, searchLayerVector);
+        //addMarker(inputExtent.lat, inputExtent.lng, searchLayerVector);
+
+        // TODO: Add WKT bounds?
+        var format = new ol.format.WKT();
+
+        // TODO: if no wkt we need to accomidate try...catch => Example: Manchester and Poinciana
+        // Will need to place a marker in the center if we don't have wkt
+        console.log(inputExtent.wkt);
+        var searchFeatureWkt = format.readFeature(inputExtent.wkt, {
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:3857'
+        });
+
+        console.log(searchFeatureWkt);
+
+        var wktStyle = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 100, 50, 0.3)'
+            }),
+            stroke: new ol.style.Stroke({
+                width: 2,
+                color: 'rgba(255, 100, 50, 0.8)'
+            })
+        });
+        searchFeatureWkt.setStyle(wktStyle);
+
+        searchLayerVector.getSource().addFeatures([searchFeatureWkt]);
+
+
 
     }
 
