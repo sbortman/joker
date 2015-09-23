@@ -5,6 +5,7 @@
 //= require webjars/devbridge-autocomplete/1.2.21/dist/jquery.autocomplete.js
 
 //= require manifest-map.js
+//= require manifest-zoom.js
 //= require map.js
 //= require search.js
 

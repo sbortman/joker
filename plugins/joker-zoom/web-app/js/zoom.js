@@ -27,9 +27,9 @@ var ZoomTo = (function () {
     /**
      * Cache DOM elements.  Modify to your form element names.
      */
-    var $zoomToForm = $('#zoomToForm');
-    var $zoomButton =  $('#zoomButton');
-    var $coordInput = $('#coordInput');
+    var $zoomToForm = $('#searchForm');
+    var $zoomButton =  $('#searchButton');
+    var $coordInput = $('#searchInput');
     // ********************************************************************
 
     var lat,
@@ -331,5 +331,8 @@ var ZoomTo = (function () {
         "timeOut": "10000"
     };
 
+    return {
+        cycleRegExs: cycleRegExs
+    };
 
 })();

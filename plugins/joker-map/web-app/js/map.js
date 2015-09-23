@@ -18,10 +18,38 @@ var Map = (function () {
     //    return param;
     //}
 
-    var map;
-    var zoomToLevel = 14; // Change this to desired zoom level
-    var searchLayerVector;
-    var iconStyle;
+    var zoomToLevel = 14;
+    var map,
+        mapView,
+        searchLayerVector, // Used for visualizing the search items map markers polygon boundaries
+        wktFormat,
+        searchFeatureWkt,
+        iconStyle,
+        wktStyle;
+
+    iconStyle = new ol.style.Style({
+        image: new ol.style.Icon(({
+            anchor: [0.5, 46],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            opacity: 0.75,
+            src: 'assets/search_marker_green.png'
+        }))
+    });
+
+    wktStyle = new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: 'rgba(255, 100, 50, 0.2)'
+        }),
+        stroke: new ol.style.Stroke({
+            width: 1.5,
+            color: 'rgba(255, 100, 50, 0.6)'
+        })
+    });
+
+    searchLayerVector = new ol.layer.Vector({
+        source: new ol.source.Vector()
+    });
 
     /**
      * @function init
@@ -29,7 +57,7 @@ var Map = (function () {
      */
     function init() {
 
-        var mapView = new ol.View({
+        mapView = new ol.View({
             center: [0, 0],
             zoom: 2
         });
@@ -47,21 +75,7 @@ var Map = (function () {
             view: mapView
         });
 
-        searchLayerVector = new ol.layer.Vector({
-            source: new ol.source.Vector()
-        });
-
         map.addLayer(searchLayerVector);
-
-        iconStyle = new ol.style.Style({
-            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                anchor: [0.5, 46],
-                anchorXUnits: 'fraction',
-                anchorYUnits: 'pixels',
-                opacity: 0.75,
-                src: 'assets/search_marker_green.png'
-            }))
-        });
 
     }
 
@@ -73,10 +87,11 @@ var Map = (function () {
      * @param {layer} layer - layer
      */
     function clearLayerSource(layer){
+
         if (layer.getSource().getFeatures().length >=1 ){
-            console.log('We have features...remove them...');
             layer.getSource().clear();
         }
+
     }
 
     /**
@@ -167,38 +182,31 @@ var Map = (function () {
 
         zoomAnimate();
 
+        // Moves the map to the extent of the search item
         map.getView().fit(searchItemExtent, map.getSize());
 
-        searchLayerVector.getSource().clear(); // Clean up the searchLayer extent for the next query
+        // Clean up the searchLayer extent for the next query
+        searchLayerVector.getSource().clear();
 
-        //addMarker(inputExtent.lat, inputExtent.lng, searchLayerVector);
+        // Add the WKT to the map to illustrate the boundary of the search item
+        if (inputExtent.wkt !== undefined){
 
-        // TODO: Add WKT bounds?
-        var format = new ol.format.WKT();
+            wktFormat = new ol.format.WKT();
+            // WKT string is in 4326 so we need to reproject it for the current map
+            searchFeatureWkt = wktFormat.readFeature(inputExtent.wkt, {
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857'
+            });
 
-        // TODO: if no wkt we need to accomidate try...catch => Example: Manchester and Poinciana
-        // Will need to place a marker in the center if we don't have wkt
-        console.log(inputExtent.wkt);
-        var searchFeatureWkt = format.readFeature(inputExtent.wkt, {
-            dataProjection: 'EPSG:4326',
-            featureProjection: 'EPSG:3857'
-        });
+            searchFeatureWkt.setStyle(wktStyle);
+            searchLayerVector.getSource().addFeatures([searchFeatureWkt]);
 
-        console.log(searchFeatureWkt);
-
-        var wktStyle = new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: 'rgba(255, 100, 50, 0.3)'
-            }),
-            stroke: new ol.style.Stroke({
-                width: 2,
-                color: 'rgba(255, 100, 50, 0.8)'
-            })
-        });
-        searchFeatureWkt.setStyle(wktStyle);
-
-        searchLayerVector.getSource().addFeatures([searchFeatureWkt]);
-
+        }
+        else {
+            // Add a marker to the map if there isn't a wkt
+            // present with the search item
+            zoomTo(inputExtent.lat, inputExtent.lng);
+        }
 
 
     }
@@ -206,7 +214,9 @@ var Map = (function () {
     return {
         init: init,
         zoomTo: zoomTo,
-        zoomToExt: zoomToExt
+        zoomToExt: zoomToExt,
+        clearLayerSource: clearLayerSource,
+        searchLayerVector: searchLayerVector
     };
 
 })();
