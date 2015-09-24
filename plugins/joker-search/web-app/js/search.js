@@ -64,16 +64,10 @@ var Search = (function () {
 
         switch (searchType){
             case 'place':
-                $searchInput.val('');
-                $searchInput.autocomplete('enable');
-                $searchButton.off('click', ZoomTo.cycleRegExs);
-                console.log('place selected');
+                searchByPlace();
                 break;
             case 'coordinate':
-                $searchInput.val('');
-                $searchInput.autocomplete('disable');
-                $searchButton.on('click', ZoomTo.cycleRegExs);
-                console.log('coordinate selected');
+                searchByCoordinates();
                 break;
             //case 'imageId':
             //    $searchInput.val('');
@@ -102,6 +96,10 @@ var Search = (function () {
      */
     function searchByPlace(){
 
+        $searchInput.val('');
+        $searchInput.attr("placeholder", "Search by place");
+        $searchInput.autocomplete('enable');
+        $searchButton.off('click', ZoomTo.cycleRegExs);
         //console.log('place selected');
         url = 'http://localhost/twofish/?responseIncludes=WKT_GEOMETRY_SIMPLIFIED&autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED';
         $searchInput.autocomplete({
@@ -144,7 +142,10 @@ var Search = (function () {
     }
 
     function searchByCoordinates(){
-        console.log('coordinate selected');
+        $searchInput.val('');
+        $searchInput.attr("placeholder", "Search by coordinate");
+        $searchInput.autocomplete('disable');
+        $searchButton.on('click', ZoomTo.cycleRegExs);
     }
 
     //function searchByImageId(){
