@@ -124,3 +124,15 @@ webAppConfig {
   }
 }
 
+
+grails {
+  assets {
+    excludes = [
+        '**/*-debug.js',
+        '**/*-deps.js',
+        '**/bower_components/**',
+        '**/node_modules/**',
+        '**/*.html',
+    ]
+  }
+}

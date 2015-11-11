@@ -1,14 +1,18 @@
-class JokerZoomBootStrap {
+class JokerZoomBootStrap
+{
 
-    def init = { servletContext ->
+  def init = { servletContext ->
 
-        def gulp = "gulp"
+    if ( false )
+    {
+      def gulp = "gulp"
 
-        def proc = gulp.execute(null, new File("web-app"))
+      def proc = gulp.execute( null, new File( "web-app" ) )
 
-        proc.consumeProcessOutput(System.out, System.err)
-
+      proc.consumeProcessOutput( System.out, System.err )
     }
-    def destroy = {
-    }
+
+  }
+  def destroy = {
+  }
 }
