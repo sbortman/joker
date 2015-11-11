@@ -1,5 +1,6 @@
 /*
-*= require webjars/bootstrap/3.3.5/css/bootstrap.css
+* require webjars/bootstrap/3.3.5/css/bootstrap.css
+*= require webjars/bootswatch-superhero/3.3.5/css/bootstrap.css
 *= require webjars/openlayers/3.8.2/ol.css
 *= require_self
 */

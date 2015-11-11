@@ -1,10 +1,9 @@
 /*
-*= require webjars/bootstrap/3.3.5/css/bootstrap.css
+* require webjars/bootstrap/3.3.5/css/bootstrap.css
+*= require webjars/bootswatch-superhero/3.3.5/css/bootstrap.css
 *= require webjars/bootstrap-select/1.7.3-1/css/bootstrap-select.css
 *= require webjars/toastr/2.1.1/toastr.css
-
 *= require manifest-map.css
-
 *= require_self
 */
 

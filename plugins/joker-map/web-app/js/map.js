@@ -6,7 +6,8 @@
  * @namespace Map
  * @returns {init}
  */
-var Map = (function () {
+var Map = (function ()
+{
 
     'use strict';
 
@@ -25,57 +26,64 @@ var Map = (function () {
         wktFormat,
         searchFeatureWkt,
         iconStyle,
-        wktStyle;
+        wktStyle,
+        webAppConfig;
 
-    iconStyle = new ol.style.Style({
-        image: new ol.style.Icon(({
-            anchor: [0.5, 46],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'pixels',
-            opacity: 0.75,
-            src: 'assets/search_marker_green.png'
-        }))
-    });
-
-    wktStyle = new ol.style.Style({
-        fill: new ol.style.Fill({
-            color: 'rgba(255, 100, 50, 0.2)'
-        }),
-        stroke: new ol.style.Stroke({
-            width: 1.5,
-            color: 'rgba(255, 100, 50, 0.6)'
-        })
-    });
-
-    searchLayerVector = new ol.layer.Vector({
-        source: new ol.source.Vector()
-    });
 
     /**
      * @function init
      * @memberof Map
      */
-    function init() {
+    function init( initParams )
+    {
+        webAppConfig = initParams;
 
-        mapView = new ol.View({
+        console.log( webAppConfig );
+
+        iconStyle = new ol.style.Style( {
+            image: new ol.style.Icon( ({
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                opacity: 0.75,
+                src: webAppConfig.twoFishes.markerIcon
+            }) )
+        } );
+
+        wktStyle = new ol.style.Style( {
+            fill: new ol.style.Fill( {
+                color: 'rgba(255, 100, 50, 0.2)'
+            } ),
+            stroke: new ol.style.Stroke( {
+                width: 1.5,
+                color: 'rgba(255, 100, 50, 0.6)'
+            } )
+        } );
+
+        searchLayerVector = new ol.layer.Vector( {
+            source: new ol.source.Vector()
+        } );
+
+
+        mapView = new ol.View( {
             center: [0, 0],
             zoom: 2
-        });
-        map = new ol.Map({
+        } );
+        map = new ol.Map( {
             layers: [
-                new ol.layer.Tile({
+                new ol.layer.Tile( {
                     source: new ol.source.OSM()
-                })],
-            controls: ol.control.defaults({
+                } )],
+            controls: ol.control.defaults( {
                 attributionOptions: ({
                     collapsible: false
                 })
-            }),
+            } ),
             target: 'map',
             view: mapView
-        });
+        } );
 
-        map.addLayer(searchLayerVector);
+        map.addLayer( searchLayerVector );
 
     }
 
@@ -86,9 +94,11 @@ var Map = (function () {
      * @memberof Map
      * @param {layer} layer - layer
      */
-    function clearLayerSource(layer){
+    function clearLayerSource( layer )
+    {
 
-        if (layer.getSource().getFeatures().length >=1 ){
+        if ( layer.getSource().getFeatures().length >= 1 )
+        {
             layer.getSource().clear();
         }
 
@@ -106,14 +116,15 @@ var Map = (function () {
      * @param {number} lon - Longitude
      * @param {layer} layer - layer
      */
-    function addMarker(lat, lon, layer){
+    function addMarker( lat, lon, layer )
+    {
 
-        clearLayerSource(layer);
-        var centerFeature = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.transform([parseFloat(lon), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'))
-        });
-        centerFeature.setStyle(iconStyle);
-        layer.getSource().addFeatures([centerFeature]);
+        clearLayerSource( layer );
+        var centerFeature = new ol.Feature( {
+            geometry: new ol.geom.Point( ol.proj.transform( [parseFloat( lon ), parseFloat( lat )], 'EPSG:4326', 'EPSG:3857' ) )
+        } );
+        centerFeature.setStyle( iconStyle );
+        layer.getSource().addFeatures( [centerFeature] );
     }
 
     /**
@@ -122,20 +133,21 @@ var Map = (function () {
      * @function zoomAnimate
      * @memberof Map
      */
-    function zoomAnimate(){
+    function zoomAnimate()
+    {
 
         var start = +new Date();
-        var pan = ol.animation.pan({
+        var pan = ol.animation.pan( {
             duration: 750,
             source: (map.getView().getCenter()),
             start: start
-        });
-        var zoom = ol.animation.zoom({
+        } );
+        var zoom = ol.animation.zoom( {
             duration: 1000,
             resolution: map.getView().getResolution()
-        });
+        } );
 
-        map.beforeRender(zoom, pan);
+        map.beforeRender( zoom, pan );
     }
 
     /**
@@ -147,12 +159,13 @@ var Map = (function () {
      * @param {number} lat - Latitude
      * @param {number} lon - Longitude
      */
-    function zoomTo(lat, lon) {
+    function zoomTo( lat, lon )
+    {
 
         zoomAnimate();
-        map.getView().setCenter(ol.proj.transform([parseFloat(lon), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'));
-        map.getView().setZoom(zoomToLevel);
-        addMarker(parseFloat(lat),parseFloat(lon), searchLayerVector);
+        map.getView().setCenter( ol.proj.transform( [parseFloat( lon ), parseFloat( lat )], 'EPSG:4326', 'EPSG:3857' ) );
+        map.getView().setZoom( zoomToLevel );
+        addMarker( parseFloat( lat ), parseFloat( lon ), searchLayerVector );
 
     }
 
@@ -164,48 +177,51 @@ var Map = (function () {
      * @memberof Map
      * @param {obj} inputExtent - inputExtent
      */
-    function zoomToExt(inputExtent) {
+    function zoomToExt( inputExtent )
+    {
 
-        clearLayerSource(searchLayerVector);
+        clearLayerSource( searchLayerVector );
 
-        var neFeature = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.transform([inputExtent.bounds.ne.lng, inputExtent.bounds.ne.lat], 'EPSG:4326', 'EPSG:3857'))
-        });
+        var neFeature = new ol.Feature( {
+            geometry: new ol.geom.Point( ol.proj.transform( [inputExtent.bounds.ne.lng, inputExtent.bounds.ne.lat], 'EPSG:4326', 'EPSG:3857' ) )
+        } );
 
-        var swFeature = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.transform([inputExtent.bounds.sw.lng, inputExtent.bounds.sw.lat], 'EPSG:4326', 'EPSG:3857'))
-        });
+        var swFeature = new ol.Feature( {
+            geometry: new ol.geom.Point( ol.proj.transform( [inputExtent.bounds.sw.lng, inputExtent.bounds.sw.lat], 'EPSG:4326', 'EPSG:3857' ) )
+        } );
 
-        searchLayerVector.getSource().addFeatures([neFeature, swFeature]);
+        searchLayerVector.getSource().addFeatures( [neFeature, swFeature] );
 
         var searchItemExtent = searchLayerVector.getSource().getExtent();
 
         zoomAnimate();
 
         // Moves the map to the extent of the search item
-        map.getView().fit(searchItemExtent, map.getSize());
+        map.getView().fit( searchItemExtent, map.getSize() );
 
         // Clean up the searchLayer extent for the next query
         searchLayerVector.getSource().clear();
 
         // Add the WKT to the map to illustrate the boundary of the search item
-        if (inputExtent.wkt !== undefined){
+        if ( inputExtent.wkt !== undefined )
+        {
 
             wktFormat = new ol.format.WKT();
             // WKT string is in 4326 so we need to reproject it for the current map
-            searchFeatureWkt = wktFormat.readFeature(inputExtent.wkt, {
+            searchFeatureWkt = wktFormat.readFeature( inputExtent.wkt, {
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857'
-            });
+            } );
 
-            searchFeatureWkt.setStyle(wktStyle);
-            searchLayerVector.getSource().addFeatures([searchFeatureWkt]);
+            searchFeatureWkt.setStyle( wktStyle );
+            searchLayerVector.getSource().addFeatures( [searchFeatureWkt] );
 
         }
-        else {
+        else
+        {
             // Add a marker to the map if there isn't a wkt
             // present with the search item
-            zoomTo(inputExtent.lat, inputExtent.lng);
+            zoomTo( inputExtent.lat, inputExtent.lng );
         }
 
 
