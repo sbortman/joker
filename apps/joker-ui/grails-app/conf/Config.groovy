@@ -122,6 +122,16 @@ webAppConfig {
     serverUrl = 'http://localhost:8081/twofish'
     markerIcon = '/joker-ui/assets/search_marker_green.png'
   }
+  referenceMap {
+    url = 'http://geoserver-demo01.dev.ossim.org/geoserver/ged/wms?'
+    params = [
+        LAYERS: 'osm-group',
+        TILED: true
+//        VERSION: '1.1,1',
+//        SRS: 'epsg:4326'
+    ]
+    serverType: 'geoserver'
+  }
 }
 
 

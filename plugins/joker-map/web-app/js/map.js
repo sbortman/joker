@@ -66,13 +66,15 @@ var Map = (function ()
 
 
         mapView = new ol.View( {
+            projection: 'EPSG:4326',
             center: [0, 0],
             zoom: 2
         } );
         map = new ol.Map( {
             layers: [
                 new ol.layer.Tile( {
-                    source: new ol.source.OSM()
+//                    source: new ol.source.OSM()
+                    source: new ol.source.TileWMS( webAppConfig.referenceMap )
                 } )],
             controls: ol.control.defaults( {
                 attributionOptions: ({
@@ -121,7 +123,10 @@ var Map = (function ()
 
         clearLayerSource( layer );
         var centerFeature = new ol.Feature( {
-            geometry: new ol.geom.Point( ol.proj.transform( [parseFloat( lon ), parseFloat( lat )], 'EPSG:4326', 'EPSG:3857' ) )
+            geometry: new ol.geom.Point(
+                ol.proj.transform(
+                    [parseFloat( lon ), parseFloat( lat )], 'EPSG:4326', 'EPSG:4326' )
+            )
         } );
         centerFeature.setStyle( iconStyle );
         layer.getSource().addFeatures( [centerFeature] );
@@ -161,9 +166,16 @@ var Map = (function ()
      */
     function zoomTo( lat, lon )
     {
-
         zoomAnimate();
-        map.getView().setCenter( ol.proj.transform( [parseFloat( lon ), parseFloat( lat )], 'EPSG:4326', 'EPSG:3857' ) );
+
+        // Figure out 3857 later,  once we get our basemap inside
+        map.getView().setCenter(
+            ol.proj.transform( [
+                parseFloat( lon ),
+                parseFloat( lat )
+            ], 'EPSG:4326', 'EPSG:4326' )
+        );
+
         map.getView().setZoom( zoomToLevel );
         addMarker( parseFloat( lat ), parseFloat( lon ), searchLayerVector );
 
@@ -183,11 +195,17 @@ var Map = (function ()
         clearLayerSource( searchLayerVector );
 
         var neFeature = new ol.Feature( {
-            geometry: new ol.geom.Point( ol.proj.transform( [inputExtent.bounds.ne.lng, inputExtent.bounds.ne.lat], 'EPSG:4326', 'EPSG:3857' ) )
+            geometry: new ol.geom.Point(
+                ol.proj.transform(
+                    [inputExtent.bounds.ne.lng, inputExtent.bounds.ne.lat], 'EPSG:4326', 'EPSG:4326' )
+            )
         } );
 
         var swFeature = new ol.Feature( {
-            geometry: new ol.geom.Point( ol.proj.transform( [inputExtent.bounds.sw.lng, inputExtent.bounds.sw.lat], 'EPSG:4326', 'EPSG:3857' ) )
+            geometry: new ol.geom.Point(
+                ol.proj.transform(
+                    [inputExtent.bounds.sw.lng, inputExtent.bounds.sw.lat], 'EPSG:4326', 'EPSG:4326' )
+            )
         } );
 
         searchLayerVector.getSource().addFeatures( [neFeature, swFeature] );
@@ -210,7 +228,8 @@ var Map = (function ()
             // WKT string is in 4326 so we need to reproject it for the current map
             searchFeatureWkt = wktFormat.readFeature( inputExtent.wkt, {
                 dataProjection: 'EPSG:4326',
-                featureProjection: 'EPSG:3857'
+                //featureProjection: 'EPSG:3857'
+                featureProjection: 'EPSG:4326'
             } );
 
             searchFeatureWkt.setStyle( wktStyle );

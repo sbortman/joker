@@ -73,7 +73,7 @@ grails.project.dependency.resolution = {
 
 
     compile ":standalone:1.3"
-
+    runtime ":cors:1.1.8"
 
     // Uncomment these to enable additional asset-pipeline capabilities
     //compile ":sass-asset-pipeline:1.9.0"
