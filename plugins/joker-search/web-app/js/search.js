@@ -7,8 +7,7 @@
  *
  * @namespace Search
  */
-var Search = (function ()
-{
+var Search = (function () {
     "use strict";
 
     // jasmine test functions
@@ -25,16 +24,16 @@ var Search = (function ()
     var webAppConfig;
 
     // cache DOM
-    var $el = $( '#searchForm' );
-    var $searchSelect = $el.find( '#searchSelect' );
-    var $searchInput = $el.find( '#searchInput' );
-    var $searchButton = $el.find( '#searchButton' );
-    var $clearSearchButton = $el.find( '#clearSearchButton' );
+    var $el = $('#searchForm');
+    var $searchSelect = $el.find('#searchSelect');
+    var $searchInput = $el.find('#searchInput');
+    var $searchButton = $el.find('#searchButton');
+    var $clearSearchButton = $el.find('#clearSearchButton');
 
     // bind events
-    $el.keypress( suppressKey );
-    $searchSelect.on( 'change', changeSearchType );
-    $clearSearchButton.on( 'click', clearSearch );
+    $el.keypress(suppressKey);
+    $searchSelect.on('change', changeSearchType);
+    $clearSearchButton.on('click', clearSearch);
 
 
     /**
@@ -43,10 +42,8 @@ var Search = (function ()
      * @function suppressKey
      * @memberof Search
      */
-    function suppressKey( event )
-    {
-        if ( event.keyCode === 10 || event.keyCode === 13 )
-        {
+    function suppressKey(event) {
+        if (event.keyCode === 10 || event.keyCode === 13) {
             event.preventDefault();
         }
     }
@@ -57,25 +54,22 @@ var Search = (function ()
      * @function clearSearch
      * @memberof Search
      */
-    function clearSearch()
-    {
-        $searchInput.val( '' );
-        Map.clearLayerSource( Map.searchLayerVector );
+    function clearSearch() {
+        $searchInput.val('');
+        Map.clearLayerSource(Map.searchLayerVector);
     }
 
-    function changeSearchType()
-    {
+    function changeSearchType() {
 
         var searchType = $searchSelect.val();
 
-        switch ( searchType )
-        {
-        case 'place':
-            searchByPlace();
-            break;
-        case 'coordinate':
-            searchByCoordinates();
-            break;
+        switch (searchType) {
+            case 'place':
+                searchByPlace();
+                break;
+            case 'coordinate':
+                searchByCoordinates();
+                break;
             //case 'imageId':
             //    $searchInput.val('');
             //    $searchInput.autocomplete('disable');
@@ -84,8 +78,8 @@ var Search = (function ()
             //    $searchInput.val('');
             //    $searchInput.autocomplete('disable');
             //    break;
-        default:
-            console.log( 'nothing selected' );
+            default:
+                console.log('nothing selected');
         }
 
         return 'changeSearchType fired';
@@ -102,26 +96,23 @@ var Search = (function ()
      * @function searchByPlace
      * @memberof Search
      */
-    function searchByPlace()
-    {
-        $searchInput.val( '' );
-        $searchInput.attr( "placeholder", "Search by place" );
+    function searchByPlace() {
+        $searchInput.val('');
+        $searchInput.attr("placeholder", "Search by place");
 
         twoFishesUrl =
             webAppConfig.twoFishes.proxyUrl
-            //'/joker-ui/twoFishesProxy'
+                //'/joker-ui/twoFishesProxy'
             + '?responseIncludes=WKT_GEOMETRY_SIMPLIFIED&autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED';
 
-        $searchInput.autocomplete( {
+        $searchInput.autocomplete({
             serviceUrl: twoFishesUrl,
             dataType: 'json',
             type: 'GET',
-            transformResult: function ( response )
-            {
+            transformResult: function (response) {
                 //console.log('response', response);
                 return {
-                    suggestions: $.map( response.interpretations, function ( dataItem )
-                    {
+                    suggestions: $.map(response.interpretations, function (dataItem) {
                         //console.log(dataItem);
                         //console.log('value: ' + dataItem.feature.displayName + ' data: ' +
                         // dataItem.feature.displayName);
@@ -133,35 +124,33 @@ var Search = (function ()
                             bounds: dataItem.feature.geometry.bounds,
                             wkt: dataItem.feature.geometry.wktGeometrySimplified
                         };
-                    } )
+                    })
                 };
             },
-            onSelect: function ( suggestion )
-            {
+            onSelect: function (suggestion) {
+
                 //console.log('You selected: ' + suggestion.value + ', \n' + suggestion.lat + ', \n' + suggestion.lng);
                 //console.log('suggestion', suggestion);
-
-                if ( suggestion.bounds === undefined )
-                {
+                if (suggestion.bounds === undefined) {
                     //console.log('bounds is undefined!');
-                    Map.zoomTo( suggestion.lat, suggestion.lng );
+                    Map.zoomTo(suggestion.lat, suggestion.lng);
+                    $searchInput.val('');
                 }
-                else
-                {
-                    Map.zoomToExt( suggestion );
+                else {
+                    Map.zoomToExt(suggestion);
+                    $searchInput.val('');
                 }
 
             }
-        } );
+        });
 
     }
 
-    function searchByCoordinates()
-    {
-        $searchInput.val( '' );
-        $searchInput.attr( "placeholder", "Search by coordinate" );
-        $searchInput.autocomplete( 'disable' );
-        $searchButton.on( 'click', ZoomTo.cycleRegExs );
+    function searchByCoordinates() {
+        $searchInput.val('');
+        $searchInput.attr("placeholder", "Search by coordinate");
+        $searchInput.autocomplete('disable');
+        $searchButton.on('click', ZoomTo.cycleRegExs);
     }
 
     //function searchByImageId(){
@@ -172,8 +161,8 @@ var Search = (function ()
     //    console.log('beNum selected');
     //}
 
-    function init( initParams )
-    {
+    function init(initParams) {
+
         webAppConfig = initParams;
         searchByPlace();
 
