@@ -122,13 +122,14 @@ var Search = (function () {
                             lat: dataItem.feature.geometry.center.lat,
                             lng: dataItem.feature.geometry.center.lng,
                             bounds: dataItem.feature.geometry.bounds,
-                            wkt: dataItem.feature.geometry.wktGeometrySimplified
+                            wkt: dataItem.feature.geometry.wktGeometrySimplified,
+                            dataAll: dataItem.feature
                         };
                     })
                 };
             },
             onSelect: function (suggestion) {
-
+                addInfo(suggestion.dataAll);
                 //console.log('You selected: ' + suggestion.value + ', \n' + suggestion.lat + ', \n' + suggestion.lng);
                 //console.log('suggestion', suggestion);
                 if (suggestion.bounds === undefined) {
@@ -143,6 +144,14 @@ var Search = (function () {
 
             }
         });
+
+    }
+
+    function addInfo(info) {
+        console.log(info);
+        $('#info').show();
+        $('#infoPlaceName').html(info.displayName);
+        $('#infoPopulation').html(info.attributes.population);
 
     }
 

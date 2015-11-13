@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Demo | Search</title>
+    <title>OMAR | GeoSearch</title>
     <asset:stylesheet src="manifest-search.css"/>
 </head>
 
@@ -19,7 +19,7 @@
     <br>
     <div class="row alert alert-success">
         <div class="col-md-12">
-                <h1>OMAR | GeoSearch</h1>
+            <h1>OMAR | GeoSearch</h1>
         </div>
     </div>
 </div>
@@ -56,7 +56,12 @@
                 </form>
             </div>
         </div>
-        <div style="background-color: #ccc; height: 600px;" class="col-md-3"></div>
+        <div id="info" style="display: none; height: 600px;" class="col-md-3 well">
+            <label class="label label-info" for="infoPlaceName">Name:</label>
+            <p id="infoPlaceName"></p>
+            <label class="label label-info" for="infoPopulation">Population:</label>
+            <p id="infoPopulation"></p>
+        </div>
     </div>
 </div>
 

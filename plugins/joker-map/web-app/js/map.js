@@ -61,8 +61,6 @@ var Map = (function () {
             })
         });
 
-
-
         mapView = new ol.View({
             projection: 'EPSG:4326',
             center: [0, 0],
