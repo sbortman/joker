@@ -148,6 +148,7 @@ var Search = (function () {
 
     }
 
+    // TODO: Cache the DOM elements
     function addInfo(info) {
         clearInfo();
         //console.log(info);
@@ -156,9 +157,9 @@ var Search = (function () {
         $('#infoPlaceName').html(info.displayName);
         $('#infoPopulation').html(info.attributes.population);
         $('#infoCentroid').html(info.geometry.center.lat + ', ' + info.geometry.center.lng);
-        //$('#infoBbox').html(Map.getItemExtent());
-        //$('#infoWkt').html(info.geometry.wktGeometrySimplified);
-
+        $('#infoBbox4326').html(Map.getItemExtent4326());
+        $('#infoBbox3857').html(Map.getItemExtent3857());
+        $('#infoWkt').html(info.geometry.wktGeometrySimplified);
     }
 
     function clearInfo(){

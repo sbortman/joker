@@ -73,20 +73,19 @@
                             <label class="label label-info" for="infoCentroid">Centroid:</label>
                             <p id="infoCentroid"></p>
                         </div>
-                        %{--<label class="label label-info" for="infoBbox">Bounding Box:</label>--}%
-                        %{--<p id="infoBbox"></p>--}%
-                        %{--<label class="label label-info" for="infoWkt">WKT:</label>--}%
-                        %{--<p id="infoWkt"></p>--}%
                         <div class="form-group">
-                            <button type="button" style="width: 100%;" class="btn btn-success" id="btnInfoBbox">Copy
+                            <button type="button" style="width: 100%;" class="btn btn-success" data-toggle="modal"
+                                    data-target="#infoBboxModal" id="btnInfoBbox">Copy
                         BBox</button>
                         </div>
                         <div class="form-group">
-                            <button type="button" style="width: 100%;" class="btn btn-success" id="btnInfoWkt">Copy
+                            <button type="button" style="width: 100%;" class="btn btn-success" data-toggle="modal"
+                                    data-target="#infoWktModal" id="btnInfoWkt">Copy
                             WKT</button>
                         </div>
                         <div class="form-group">
-                            <button type="button" style="width: 100%;" class="btn btn-success" id="btnInfoGeoJson"
+                            <button type="button" style="width: 100%;" class="btn btn-success" data-toggle="modal"
+                                    data-target="#infoGeoJsonModal" id="btnInfoGeoJson"
                                     disabled>Copy
                             GeoJSON</button>
                         </div>
@@ -96,6 +95,118 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="infoBboxModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Bounding Box Information</h4>
+            </div>
+            <div class="modal-body">
+                <p>Toggle the tabs below to view the bounding box in different projections.</p>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#bBoxEpsg4326" aria-controls="bBoxEpsg4326" role="tab" data-toggle="tab">EPSG: 4326</a></li>
+                    <li role="presentation"><a href="#bBoxEpsg3857" aria-controls="bBoxEpsg3857" role="tab"
+                       data-toggle="tab">EPSG: 3857</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active in active" id="bBoxEpsg4326">
+                        %{--<br>--}%
+                        %{--<button type="button" class="btn btn-warning">Copy to Clipboard</button>--}%
+                        <br>
+                        <code id="infoBbox4326"></code>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="bBoxEpsg3857">
+                        %{--<br>--}%
+                        %{--<button type="button" class="btn btn-warning">Copy to Clipboard</button>--}%
+                        <br>
+                        <code id="infoBbox3857"></code>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="infoWktModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">WKT Information</h4>
+            </div>
+            <div class="modal-body">
+                <p>Toggle the tabs below to view the WKT string in different projections.</p>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#wktEpsg4326" aria-controls="wktEpsg4326"
+                            role="tab" data-toggle="tab">EPSG: 4326</a></li>
+                    <li role="presentation"><a href="#wktEpsg3857" aria-controls="wktEpsg3857" role="tab"
+                            data-toggle="tab">EPSG: 3857</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active in active" id="wktEpsg4326">
+                        %{--<br>--}%
+                        %{--<button type="button" class="btn btn-warning">Copy to Clipboard</button>--}%
+                        <br>
+                        <code id="infoWkt"></code>
+                        <br>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="wktEpsg3857">
+                        <code>Coming Soon!</code>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+%{--<div class="modal fade" id="infoGeoJsonModal">--}%
+    %{--<div class="modal-dialog">--}%
+        %{--<div class="modal-content">--}%
+            %{--<div class="modal-header">--}%
+                %{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}%
+                %{--<h4 class="modal-title">GeoJSON</h4>--}%
+            %{--</div>--}%
+            %{--<div class="modal-body">--}%
+
+                %{--<!-- Nav tabs -->--}%
+                %{--<ul class="nav nav-tabs" role="tablist">--}%
+                    %{--<li role="presentation" class="active"><a href="#geoJsonEpsg4326" aria-controls="geoJsonEpsg4326"--}%
+                                                              %{--role="tab" data-toggle="tab">EPSG: 4326</a></li>--}%
+                    %{--<li role="presentation"><a href="#bBoxepsg3857" aria-controls="geoJsonEpsg3857" role="tab"--}%
+                                               %{--data-toggle="tab">EPSG: 3857</a></li>--}%
+                %{--</ul>--}%
+
+                %{--<!-- Tab panes -->--}%
+                %{--<div class="tab-content">--}%
+                    %{--<div role="tabpanel" class="tab-pane active in active" id="geoJsonEpsg4326">--}%
+                        %{--<code id="infogeoJson"></code>--}%
+                    %{--</div>--}%
+                    %{--<div role="tabpanel" class="tab-pane fade" id="geoJsonEpsg3857">...</div>--}%
+                %{--</div>--}%
+
+            %{--</div>--}%
+
+            %{--<div class="modal-footer">--}%
+                %{--<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>--}%
+            %{--</div>--}%
+        %{--</div><!-- /.modal-content -->--}%
+    %{--</div><!-- /.modal-dialog -->--}%
+%{--</div><!-- /.modal -->--}%
 
 <asset:javascript src="manifest-search.js"/>
 <asset:script>

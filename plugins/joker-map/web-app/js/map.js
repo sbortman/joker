@@ -86,15 +86,25 @@ var Map = (function () {
     }
 
     var itemExtent = "...";
+    var itemtExtent4326 = "...";
 
-    function setItemExtent(extent){
-        itemExtent = extent;
+    function setItemExtent(extent3857, extent4326) {
+        itemExtent = extent3857;
+        itemtExtent4326 = extent4326;
     }
 
-    function getItemExtent() {
+    function getItemExtent4326() {
         var formattedExtent = String(itemExtent).split(",");
-        console.log();
-        return '\n ' + formattedExtent[0] + '\n, ' + formattedExtent[1] + '\n, ' + formattedExtent[2] + '\n, ' + formattedExtent[3];
+        var formatted4326 = formattedExtent[0] + ', ' + formattedExtent[1] + ', ' + formattedExtent[2] + ', ' + formattedExtent[3];
+
+        return formatted4326;
+    }
+
+    function getItemExtent3857() {
+        var formattedExtent = String(itemtExtent4326).split(",");
+        var formatted4326 = formattedExtent[0] + ', ' + formattedExtent[1] + ', ' + formattedExtent[2] + ', ' + formattedExtent[3];
+
+        return formatted4326;
     }
 
     /**
@@ -214,7 +224,11 @@ var Map = (function () {
 
         itemExtent = searchLayerVector.getSource().getExtent();
         console.log('itemExtent', itemExtent);
-        setItemExtent(itemExtent);
+
+        var itemExtent3857 = ol.proj.transformExtent(itemExtent, 'EPSG:4326', 'EPSG:3857');
+        console.log(itemExtent3857);
+
+        setItemExtent(itemExtent, itemExtent3857);
 
         zoomAnimate();
 
@@ -258,7 +272,8 @@ var Map = (function () {
         zoomToExt: zoomToExt,
         clearLayerSource: clearLayerSource,
         searchLayerVector: searchLayerVector,
-        getItemExtent: getItemExtent
+        getItemExtent4326: getItemExtent4326,
+        getItemExtent3857: getItemExtent3857
 
     };
 
