@@ -56,11 +56,43 @@
                 </form>
             </div>
         </div>
-        <div id="info" style="display: none; height: 600px;" class="col-md-3 well">
-            <label class="label label-info" for="infoPlaceName">Name:</label>
-            <p id="infoPlaceName"></p>
-            <label class="label label-info" for="infoPopulation">Population:</label>
-            <p id="infoPopulation"></p>
+        <div id="info" style="display: none;" class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Information</div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="label label-info" for="infoPlaceName">Name:</label>
+                            <p id="infoPlaceName"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="label label-info" for="infoPopulation">Population:</label>
+                            <p id="infoPopulation"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="label label-info" for="infoCentroid">Centroid:</label>
+                            <p id="infoCentroid"></p>
+                        </div>
+                        %{--<label class="label label-info" for="infoBbox">Bounding Box:</label>--}%
+                        %{--<p id="infoBbox"></p>--}%
+                        %{--<label class="label label-info" for="infoWkt">WKT:</label>--}%
+                        %{--<p id="infoWkt"></p>--}%
+                        <div class="form-group">
+                            <button type="button" style="width: 100%;" class="btn btn-success" id="btnInfoBbox">Copy
+                        BBox</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" style="width: 100%;" class="btn btn-success" id="btnInfoWkt">Copy
+                            WKT</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" style="width: 100%;" class="btn btn-success" id="btnInfoGeoJson"
+                                    disabled>Copy
+                            GeoJSON</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -129,16 +129,17 @@ var Search = (function () {
                 };
             },
             onSelect: function (suggestion) {
-                addInfo(suggestion.dataAll);
                 //console.log('You selected: ' + suggestion.value + ', \n' + suggestion.lat + ', \n' + suggestion.lng);
                 //console.log('suggestion', suggestion);
                 if (suggestion.bounds === undefined) {
                     //console.log('bounds is undefined!');
                     Map.zoomTo(suggestion.lat, suggestion.lng);
+                    addInfo(suggestion.dataAll);
                     $searchInput.val('');
                 }
                 else {
                     Map.zoomToExt(suggestion);
+                    addInfo(suggestion.dataAll);
                     $searchInput.val('');
                 }
 
@@ -148,11 +149,24 @@ var Search = (function () {
     }
 
     function addInfo(info) {
-        console.log(info);
+        clearInfo();
+        //console.log(info);
         $('#info').show();
+
         $('#infoPlaceName').html(info.displayName);
         $('#infoPopulation').html(info.attributes.population);
+        $('#infoCentroid').html(info.geometry.center.lat + ', ' + info.geometry.center.lng);
+        //$('#infoBbox').html(Map.getItemExtent());
+        //$('#infoWkt').html(info.geometry.wktGeometrySimplified);
 
+    }
+
+    function clearInfo(){
+        $('#infoPlaceName').html('');
+        $('#infoPopulation').html('');
+        $('#infoCentroid').html('');
+        $('#infoBbox').html('');
+        $('#infoWkt').html('');
     }
 
     function searchByCoordinates() {

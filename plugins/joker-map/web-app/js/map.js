@@ -85,6 +85,18 @@ var Map = (function () {
 
     }
 
+    var itemExtent = "...";
+
+    function setItemExtent(extent){
+        itemExtent = extent;
+    }
+
+    function getItemExtent() {
+        var formattedExtent = String(itemExtent).split(",");
+        console.log();
+        return '\n ' + formattedExtent[0] + '\n, ' + formattedExtent[1] + '\n, ' + formattedExtent[2] + '\n, ' + formattedExtent[3];
+    }
+
     /**
      * Clear a layer's source, and
      * remove all features
@@ -181,7 +193,7 @@ var Map = (function () {
      * @param {obj} inputExtent - inputExtent
      */
     function zoomToExt(inputExtent) {
-
+        console.log('zoomToFiring!')
         clearLayerSource(searchLayerVector);
 
         var neFeature = new ol.Feature({
@@ -200,12 +212,14 @@ var Map = (function () {
 
         searchLayerVector.getSource().addFeatures([neFeature, swFeature]);
 
-        var searchItemExtent = searchLayerVector.getSource().getExtent();
+        itemExtent = searchLayerVector.getSource().getExtent();
+        console.log('itemExtent', itemExtent);
+        setItemExtent(itemExtent);
 
         zoomAnimate();
 
         // Moves the map to the extent of the search item
-        map.getView().fit(searchItemExtent, map.getSize());
+        map.getView().fit(itemExtent, map.getSize());
 
         // Clean up the searchLayer extent for the next query
         searchLayerVector.getSource().clear();
@@ -231,7 +245,11 @@ var Map = (function () {
             zoomTo(inputExtent.lat, inputExtent.lng);
         }
 
+    }
 
+    function getExtent(extent){
+        console.log(extent);
+        return extent;
     }
 
     return {
@@ -239,7 +257,9 @@ var Map = (function () {
         zoomTo: zoomTo,
         zoomToExt: zoomToExt,
         clearLayerSource: clearLayerSource,
-        searchLayerVector: searchLayerVector
+        searchLayerVector: searchLayerVector,
+        getItemExtent: getItemExtent
+
     };
 
 })();
