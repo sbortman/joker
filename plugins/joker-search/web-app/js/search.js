@@ -159,7 +159,8 @@ var Search = (function () {
         $('#infoCentroid').html(info.geometry.center.lat + ', ' + info.geometry.center.lng);
         $('#infoBbox4326').html(Map.getItemExtent4326());
         $('#infoBbox3857').html(Map.getItemExtent3857());
-        $('#infoWkt').html(info.geometry.wktGeometrySimplified);
+        $('#infoWkt4326').html(info.geometry.wktGeometrySimplified);
+        $('#infoWkt3857').html(Map.getWkt3857());
     }
 
     function clearInfo(){

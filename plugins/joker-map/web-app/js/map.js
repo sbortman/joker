@@ -107,6 +107,27 @@ var Map = (function () {
         return formatted4326;
     }
 
+    var wktOutput3857 = "";
+
+    function setWkt3857(wkt) {
+        var wkt4326Input = new ol.format.WKT();
+        var wkt3857Feature = wkt4326Input.readFeature(wkt, {
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857'
+            }
+        ); // returns a feature
+        wktOutput3857 = wkt4326Input.writeFeature(wkt3857Feature, {
+                dataProjection: 'EPSG:3857',
+                featureProjection: 'EPSG:3857'
+            }
+        ); // returns a wkt string
+        console.log('wktOutput3857', wktOutput3857);
+    }
+
+    function getWkt3857(){
+        return wktOutput3857;
+    }
+
     /**
      * Clear a layer's source, and
      * remove all features
@@ -248,9 +269,10 @@ var Map = (function () {
                 //featureProjection: 'EPSG:3857'
                 featureProjection: 'EPSG:4326'
             });
-
+            console.log('searchFeatureWkt', searchFeatureWkt);
             searchFeatureWkt.setStyle(wktStyle);
             searchLayerVector.getSource().addFeatures([searchFeatureWkt]);
+            setWkt3857(inputExtent.wkt);
 
         }
         else {
@@ -261,7 +283,7 @@ var Map = (function () {
 
     }
 
-    function getExtent(extent){
+    function getExtent(extent) {
         console.log(extent);
         return extent;
     }
@@ -273,7 +295,8 @@ var Map = (function () {
         clearLayerSource: clearLayerSource,
         searchLayerVector: searchLayerVector,
         getItemExtent4326: getItemExtent4326,
-        getItemExtent3857: getItemExtent3857
+        getItemExtent3857: getItemExtent3857,
+        getWkt3857: getWkt3857
 
     };
 

@@ -157,11 +157,11 @@
                         %{--<br>--}%
                         %{--<button type="button" class="btn btn-warning">Copy to Clipboard</button>--}%
                         <br>
-                        <code id="infoWkt"></code>
+                        <code id="infoWkt4326"></code>
                         <br>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="wktEpsg3857">
-                        <code>Coming Soon!</code>
+                        <code id="infoWkt3857"></code>
                     </div>
                 </div>
 
