@@ -68,7 +68,7 @@ var Map = (function () {
         mapView = new ol.View({
             projection: 'EPSG:4326',
             center: [0, 0],
-            zoom: 2
+            zoom: 3
         });
         map = new ol.Map({
             layers: [
@@ -86,6 +86,8 @@ var Map = (function () {
         });
 
         map.addLayer(searchLayerVector);
+
+        resizeMapRow();
 
     }
 
@@ -326,6 +328,21 @@ var Map = (function () {
         //console.log(extent);
         return extent;
     }
+
+    function resizeMapRow(){
+        console.log('resizing');
+        $('#map').animate({height:$(window).height()- 172}, 100, function(){
+            map.updateSize();
+        });
+
+    }
+
+    $(window).resize(function(){
+        resizeMapRow();
+    });
+
+
+
 
     return {
         init: init,
