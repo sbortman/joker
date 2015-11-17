@@ -135,11 +135,13 @@ var Search = (function () {
                     Map.zoomTo(suggestion.lat, suggestion.lng);
                     addInfo(suggestion.dataAll);
                     $searchInput.val('');
+                    $('#info').find('.btn').addClass('disabled');
                 }
                 else {
                     Map.zoomToExt(suggestion);
                     addInfo(suggestion.dataAll);
                     $searchInput.val('');
+                    $('#info').find('.btn').removeClass('disabled');
                 }
 
             }
@@ -190,6 +192,15 @@ var Search = (function () {
     //}
 
     function setupZeroClipboard(){
+
+        // TODO: Need to abstract the setup for multiple Clipboard instances
+        //       on one page.  This is a quick and very dirty way to do it.
+        //       We should be able to set up one instance using a jquery class
+        //       selector, and then grab the .html() from the infobox using
+        //       a selector like $(this).sibling(code).  This would greatly
+        //       reduce the amount of code that is needed.  Will need to circle
+        //       back to this when time permits.
+
         console.log('webApp.swfPath', webAppConfig.zeroClipboard.swfPath);
 
         // ###### BBox
@@ -264,7 +275,7 @@ var Search = (function () {
         searchByPlace();
 
         setupZeroClipboard();
-        
+
     }
 
     return {
