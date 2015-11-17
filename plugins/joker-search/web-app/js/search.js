@@ -35,7 +35,6 @@ var Search = (function () {
     $searchSelect.on('change', changeSearchType);
     $clearSearchButton.on('click', clearSearch);
 
-
     /**
      * Remove enter/return key forcing a form
      * submit, and reloading the page
@@ -190,11 +189,7 @@ var Search = (function () {
     //    console.log('beNum selected');
     //}
 
-    function init(initParams) {
-
-        webAppConfig = initParams;
-        searchByPlace();
-
+    function setupZeroClipboard(){
         console.log('webApp.swfPath', webAppConfig.zeroClipboard.swfPath);
 
         // ###### BBox
@@ -217,7 +212,6 @@ var Search = (function () {
             toastr.info('Data copied to clipboard...', 'Info');
             console.log('Copied to clipboard: ' + event.data['text/plain']);
         });
-
 
         // ###### WKT
         var clipWkt4326 = new ZeroClipboard($("#wkt4326Copy"));
@@ -261,21 +255,16 @@ var Search = (function () {
             console.log('Copied to clipboard: ' + event.data['text/plain']);
         });
 
+    }
 
+    function init(initParams) {
 
-        //clip.on("ready", function(e) {
-        //    //console.log("Ready!");
-        //
-        //    clip.on( 'copy', function(event) {
-        //        //event.clipboardData.setData('text/plain', event.target.innerHTML);
-        //        console.log(this);
-        //        event.clipboardData.setData('text/plain', 'Copied!!!  ' + this );
-        //    } );
-        //
+        webAppConfig = initParams;
 
-        //});
+        searchByPlace();
 
-
+        setupZeroClipboard();
+        
     }
 
     return {
