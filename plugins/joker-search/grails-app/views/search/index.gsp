@@ -38,9 +38,9 @@
                                             value="place">&nbsp;&nbsp;Place&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
                                     <option data-icon="glyphicon glyphicon-screenshot"
                                             value="coordinate">&nbsp;&nbsp;Coordinate&nbsp;&nbsp;</option>
-                                    <option data-icon="glyphicon glyphicon-picture" value="imageId">&nbsp;&nbsp;Image
-                                    ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                                    <option data-icon="glyphicon glyphicon-pushpin" value="beNum">&nbsp;&nbsp;B.E. Number&nbsp;</option>
+                                    %{--<option data-icon="glyphicon glyphicon-picture" value="imageId">&nbsp;&nbsp;Image--}%
+                                    %{--ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>--}%
+                                    %{--<option data-icon="glyphicon glyphicon-pushpin" value="beNum">&nbsp;&nbsp;B.E. Number&nbsp;</option>--}%
                                 </select>
                             </div>
                             <input id="searchInput" class="form-control" type="text" placeholder="" value="">

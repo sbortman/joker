@@ -29,6 +29,31 @@ var Search = (function () {
     var $searchInput = $el.find('#searchInput');
     var $searchButton = $el.find('#searchButton');
     var $clearSearchButton = $el.find('#clearSearchButton');
+    var $info = $('#info');
+    var $infoPlaceName = $('#infoPlaceName');
+    var $infoPopulation = $('#infoPopulation');
+    var $infoCentroid = $('#infoCentroid');
+    var $infoBbox4326 = $('#infoBbox4326');
+    var $infoBbox3857 = $('#infoBbox3857');
+    var $infoWkt4326 = $('#infoWkt4326');
+    var $infoWkt3857 = $('#infoWkt3857');
+    var $infoGeoJson4326 = $('#infoGeoJson4326');
+    var $infoGeoJson3857 = $('#infoGeoJson3857');
+
+    var $bBox4326Copy = $('#bBox4326Copy');
+    var $infoBbox4326 = $('#infoBbox4326');
+    var $bBox3857Copy = $('#bBox3857Copy');
+    var $infoBbox3857 = $('#infoBbox3857');
+
+    var $wkt4326Copy = $('#wkt4326Copy');
+    var $infoWkt4326 = $('#infoWkt4326');
+    var $wkt3857Copy = $("#wkt3857Copy");
+    var $infoWkt3857 = $('#infoWkt3857');
+
+    var $geoJson4326Copy = $("#geoJson4326Copy");
+    var $infoGeoJson4326 = $('#infoGeoJson4326');
+    var $geoJson3857Copy = $("#geoJson3857Copy");
+    var $infoGeoJson3857 = $('#infoGeoJson3857');
 
     // bind events
     $el.keypress(suppressKey);
@@ -153,27 +178,29 @@ var Search = (function () {
     function addInfo(info) {
         clearInfo();
         //console.log(info);
-        $('#info').show();
+        $info.show();
 
-        $('#infoPlaceName').html(info.displayName);
-        $('#infoPopulation').html(info.attributes.population);
-        $('#infoCentroid').html(info.geometry.center.lat + ', ' + info.geometry.center.lng);
-        $('#infoBbox4326').html(Map.getItemExtent4326());
-        $('#infoBbox3857').html(Map.getItemExtent3857());
-        $('#infoWkt4326').html(info.geometry.wktGeometrySimplified);
-        $('#infoWkt3857').html(Map.getWkt3857());
-        $('#infoGeoJson4326').html(Map.getGj4326Feature());
-        $('#infoGeoJson3857').html(Map.getGj3857Feature());
+        $infoPlaceName.html(info.displayName);
+        $infoPopulation.html(info.attributes.population);
+        $infoCentroid.html(info.geometry.center.lat + ', ' + info.geometry.center.lng);
+        $infoBbox4326.html(Map.getItemExtent4326());
+        $infoBbox3857.html(Map.getItemExtent3857());
+        $infoWkt4326.html(info.geometry.wktGeometrySimplified);
+        $infoWkt3857.html(Map.getWkt3857());
+        $infoGeoJson4326.html(Map.getGj4326Feature());
+        $infoGeoJson3857.html(Map.getGj3857Feature());
     }
 
     function clearInfo() {
-        $('#infoPlaceName').html('');
-        $('#infoPopulation').html('');
-        $('#infoCentroid').html('');
-        $('#infoBbox4326').html('');
-        $('#infoBbox3857').html('');
-        $('#infoWkt4326').html('');
-        $('#infoWkt3857').html('');
+        $infoPlaceName.html('');
+        $infoPopulation.html('');
+        $infoCentroid.html('');
+        $infoBbox4326.html('');
+        $infoBbox3857.html('');
+        $infoWkt4326.html('');
+        $infoWkt3857.html('');
+        $infoGeoJson4326.html('');
+        $infoGeoJson3857.html('');
     }
 
     function searchByCoordinates() {
@@ -182,14 +209,6 @@ var Search = (function () {
         $searchInput.autocomplete('disable');
         $searchButton.on('click', ZoomTo.cycleRegExs);
     }
-
-    //function searchByImageId(){
-    //    console.log('imageId selected');
-    //}
-    //
-    //function searchByBeNum(){
-    //    console.log('beNum selected');
-    //}
 
     function setupZeroClipboard(){
 
@@ -204,9 +223,9 @@ var Search = (function () {
         console.log('webApp.swfPath', webAppConfig.zeroClipboard.swfPath);
 
         // ###### BBox
-        var clipBbox4326 = new ZeroClipboard($("#bBox4326Copy"));
+        var clipBbox4326 = new ZeroClipboard($bBox4326Copy);
         clipBbox4326.on('copy', function (event) {
-            event.clipboardData.setData('text/plain', $('#infoBbox4326').html());
+            event.clipboardData.setData('text/plain', $infoBbox4326.html());
         });
 
         clipBbox4326.on('aftercopy', function (event) {
@@ -214,9 +233,9 @@ var Search = (function () {
             console.log('Copied to clipboard: ' + event.data['text/plain']);
         });
 
-        var clipBbox3857 = new ZeroClipboard($("#bBox3857Copy"));
+        var clipBbox3857 = new ZeroClipboard($bBox3857Copy);
         clipBbox3857.on('copy', function (event) {
-            event.clipboardData.setData('text/plain', $('#infoBbox3857').html());
+            event.clipboardData.setData('text/plain', $infoBbox3857.html());
         });
 
         clipBbox3857.on('aftercopy', function (event) {
@@ -225,9 +244,9 @@ var Search = (function () {
         });
 
         // ###### WKT
-        var clipWkt4326 = new ZeroClipboard($("#wkt4326Copy"));
+        var clipWkt4326 = new ZeroClipboard($wkt4326Copy);
         clipWkt4326.on('copy', function (event) {
-            event.clipboardData.setData('text/plain', $('#infoWkt4326').html());
+            event.clipboardData.setData('text/plain', $infoWkt4326.html());
         });
 
         clipWkt4326.on('aftercopy', function (event) {
@@ -235,9 +254,9 @@ var Search = (function () {
             console.log('Copied to clipboard: ' + event.data['text/plain']);
         });
 
-        var clipWkt3857 = new ZeroClipboard($("#wkt3857Copy"));
+        var clipWkt3857 = new ZeroClipboard($wkt3857Copy);
         clipWkt3857.on('copy', function (event) {
-            event.clipboardData.setData('text/plain', $('#infoWkt3857').html());
+            event.clipboardData.setData('text/plain', $infoWkt3857.html());
         });
 
         clipWkt3857.on('aftercopy', function (event) {
@@ -246,9 +265,9 @@ var Search = (function () {
         });
 
         // ###### GeoJSON
-        var clipGeoJson4326 = new ZeroClipboard($("#geoJson4326Copy"));
+        var clipGeoJson4326 = new ZeroClipboard($geoJson4326Copy);
         clipGeoJson4326.on('copy', function (event) {
-            event.clipboardData.setData('text/plain', $('#infoGeoJson4326').html());
+            event.clipboardData.setData('text/plain', $infoGeoJson4326.html());
         });
 
         clipGeoJson4326.on('aftercopy', function (event) {
@@ -256,9 +275,9 @@ var Search = (function () {
             console.log('Copied to clipboard: ' + event.data['text/plain']);
         });
 
-        var clipGeoJson3857 = new ZeroClipboard($("#geoJson3857Copy"));
+        var clipGeoJson3857 = new ZeroClipboard($geoJson3857Copy);
         clipGeoJson3857.on('copy', function (event) {
-            event.clipboardData.setData('text/plain', $('#infoGeoJson3857').html());
+            event.clipboardData.setData('text/plain', $infoGeoJson3857.html());
         });
 
         clipGeoJson3857.on('aftercopy', function (event) {
