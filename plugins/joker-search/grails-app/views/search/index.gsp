@@ -38,9 +38,9 @@
                                             value="place">&nbsp;&nbsp;Place&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
                                     <option data-icon="glyphicon glyphicon-screenshot"
                                             value="coordinate">&nbsp;&nbsp;Coordinate&nbsp;&nbsp;</option>
-                                    %{--<option data-icon="glyphicon glyphicon-picture" value="imageId">&nbsp;&nbsp;Image--}%
-                                    %{--ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>--}%
-                                    %{--<option data-icon="glyphicon glyphicon-pushpin" value="beNum">&nbsp;&nbsp;B.E. Number&nbsp;</option>--}%
+                                    <option data-icon="glyphicon glyphicon-picture" value="imageId">&nbsp;&nbsp;Image
+                                    ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                                    <option data-icon="glyphicon glyphicon-pushpin" value="beNum">&nbsp;&nbsp;B.E. Number&nbsp;</option>
                                 </select>
                             </div>
                             <input id="searchInput" class="form-control" type="text" placeholder="" value="">
@@ -85,8 +85,7 @@
                         </div>
                         <div class="form-group">
                             <button type="button" style="width: 100%;" class="btn btn-success" data-toggle="modal"
-                                    data-target="#infoGeoJsonModal" id="btnInfoGeoJson"
-                                    disabled>Copy
+                                    data-target="#infoGeoJsonModal" id="btnInfoGeoJson">Copy
                             GeoJSON</button>
                         </div>
                     </form>
@@ -94,6 +93,7 @@
             </div>
         </div>
     </div>
+    <p><small>Geocoding engine: Twofishes (powered by Geonames.org)</small></p>
 </div>
 
 <div class="modal fade" id="infoBboxModal">
@@ -154,14 +154,24 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active in active" id="wktEpsg4326">
-                        %{--<br>--}%
-                        %{--<button type="button" class="btn btn-warning">Copy to Clipboard</button>--}%
                         <br>
-                        <code id="infoWkt4326"></code>
+                        <button id="wkt4326Copy" type="button" class="btn btn-warning">Copy to
+                        Clipboard</button>
                         <br>
+                        <br>
+                        <div style="height: 300px; overflow-y: auto">
+                            <code id="infoWkt4326" class="code"></code>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="wktEpsg3857">
-                        <code id="infoWkt3857"></code>
+                        <br>
+                        <button id="wkt3857Copy" type="button" class="btn btn-warning copy-button">Copy to
+                        Clipboard</button>
+                        <br>
+                        <br>
+                        <div style="height: 300px; overflow-y: auto">
+                            <code id="infoWkt3857" class="code"></code>
+                        </div>
                     </div>
                 </div>
 
@@ -174,39 +184,45 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-%{--<div class="modal fade" id="infoGeoJsonModal">--}%
-    %{--<div class="modal-dialog">--}%
-        %{--<div class="modal-content">--}%
-            %{--<div class="modal-header">--}%
-                %{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}%
-                %{--<h4 class="modal-title">GeoJSON</h4>--}%
-            %{--</div>--}%
-            %{--<div class="modal-body">--}%
+<div class="modal fade" id="infoGeoJsonModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">GeoJSON</h4>
+            </div>
+            <div class="modal-body">
 
-                %{--<!-- Nav tabs -->--}%
-                %{--<ul class="nav nav-tabs" role="tablist">--}%
-                    %{--<li role="presentation" class="active"><a href="#geoJsonEpsg4326" aria-controls="geoJsonEpsg4326"--}%
-                                                              %{--role="tab" data-toggle="tab">EPSG: 4326</a></li>--}%
-                    %{--<li role="presentation"><a href="#bBoxepsg3857" aria-controls="geoJsonEpsg3857" role="tab"--}%
-                                               %{--data-toggle="tab">EPSG: 3857</a></li>--}%
-                %{--</ul>--}%
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#geoJsonEpsg4326" aria-controls="geoJsonEpsg4326"
+                                                              role="tab" data-toggle="tab">EPSG: 4326</a></li>
+                    <li role="presentation"><a href="#geoJsonEpsg3857" aria-controls="geoJsonEpsg3857" role="tab"
+                                               data-toggle="tab">EPSG: 3857</a></li>
+                </ul>
 
-                %{--<!-- Tab panes -->--}%
-                %{--<div class="tab-content">--}%
-                    %{--<div role="tabpanel" class="tab-pane active in active" id="geoJsonEpsg4326">--}%
-                        %{--<code id="infogeoJson"></code>--}%
-                    %{--</div>--}%
-                    %{--<div role="tabpanel" class="tab-pane fade" id="geoJsonEpsg3857">...</div>--}%
-                %{--</div>--}%
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active in active" id="geoJsonEpsg4326">
+                        <div style="height: 300px; overflow-y: auto">
+                            <code id="infoGeoJson4326"></code>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="geoJsonEpsg3857">
+                        <div style="height: 300px; overflow-y: auto">
+                            <code id="infoGeoJson3857"></code>
+                        </div>
+                    </div>
+                </div>
 
-            %{--</div>--}%
+            </div>
 
-            %{--<div class="modal-footer">--}%
-                %{--<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>--}%
-            %{--</div>--}%
-        %{--</div><!-- /.modal-content -->--}%
-    %{--</div><!-- /.modal-dialog -->--}%
-%{--</div><!-- /.modal -->--}%
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <asset:javascript src="manifest-search.js"/>
 <asset:script>
@@ -217,6 +233,7 @@
         });
 </asset:script>
 <asset:deferredScripts/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.js"></script>
 
 </body>
 </html>

@@ -161,14 +161,18 @@ var Search = (function () {
         $('#infoBbox3857').html(Map.getItemExtent3857());
         $('#infoWkt4326').html(info.geometry.wktGeometrySimplified);
         $('#infoWkt3857').html(Map.getWkt3857());
+        $('#infoGeoJson4326').html(Map.getGj4326Feature());
+        $('#infoGeoJson3857').html(Map.getGj3857Feature());
     }
 
-    function clearInfo(){
+    function clearInfo() {
         $('#infoPlaceName').html('');
         $('#infoPopulation').html('');
         $('#infoCentroid').html('');
-        $('#infoBbox').html('');
-        $('#infoWkt').html('');
+        $('#infoBbox4326').html('');
+        $('#infoBbox3857').html('');
+        $('#infoWkt4326').html('');
+        $('#infoWkt3857').html('');
     }
 
     function searchByCoordinates() {
@@ -191,10 +195,49 @@ var Search = (function () {
         webAppConfig = initParams;
         searchByPlace();
 
+        ZeroClipboard.config({swfPath: "//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf"});
+
+        var clipWkt4326 = new ZeroClipboard($("#wkt4326Copy"));
+        clipWkt4326.on('copy', function (event) {
+            event.clipboardData.setData('text/plain', $('#infoWkt4326').html());
+        });
+
+        clipWkt4326.on('aftercopy', function (event) {
+            console.log('Copied to clipboard: ' + event.data['text/plain']);
+        });
+
+        var clipWkt3857 = new ZeroClipboard($("#wkt3857Copy"));
+        clipWkt3857.on('copy', function (event) {
+            event.clipboardData.setData('text/plain', $('#infoWkt3857').html());
+        });
+
+        clipWkt3857.on('aftercopy', function (event) {
+            console.log('Copied to clipboard: ' + event.data['text/plain']);
+        });
+
+
+
+
+
+
+        //clip.on("ready", function(e) {
+        //    //console.log("Ready!");
+        //
+        //    clip.on( 'copy', function(event) {
+        //        //event.clipboardData.setData('text/plain', event.target.innerHTML);
+        //        console.log(this);
+        //        event.clipboardData.setData('text/plain', 'Copied!!!  ' + this );
+        //    } );
+        //
+
+        //});
+
+
     }
 
     return {
         init: init
     };
+
 
 })();

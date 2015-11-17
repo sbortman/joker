@@ -23,9 +23,13 @@ var Map = (function () {
         mapView,
         searchLayerVector, // Used for visualizing the search items map markers polygon boundaries
         wktFormat,
+        wkt3857Feature,
+        gj4326Feature,
+        gj3857Feature,
         searchFeatureWkt,
         iconStyle,
         wktStyle,
+        wktOutput3857,
         webAppConfig;
 
     searchLayerVector = new ol.layer.Vector({
@@ -107,25 +111,58 @@ var Map = (function () {
         return formatted4326;
     }
 
-    var wktOutput3857 = "";
+    function getFormats(wktParm) {
 
-    function setWkt3857(wkt) {
-        var wkt4326Input = new ol.format.WKT();
-        var wkt3857Feature = wkt4326Input.readFeature(wkt, {
+        // Used for formating the wkt Output information
+        var wktFormat = new ol.format.WKT();
+
+        wkt3857Feature = wktFormat.readFeature(wktParm, {
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857'
             }
         ); // returns a feature
-        wktOutput3857 = wkt4326Input.writeFeature(wkt3857Feature, {
+
+        wktOutput3857 = wktFormat.writeFeature(wkt3857Feature, {
                 dataProjection: 'EPSG:3857',
                 featureProjection: 'EPSG:3857'
             }
         ); // returns a wkt string
-        console.log('wktOutput3857', wktOutput3857);
+
+        var wkt4326Feature = wktFormat.readFeature(wktParm, {
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:4326'
+            }
+        ); // returns a feature
+
+        // Used for formating the geoJson Output information
+        var geoJsonFormat = new ol.format.GeoJSON();
+
+        gj4326Feature = geoJsonFormat.writeFeature(wkt4326Feature,{
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:4326'
+        }); // returns GeoJSON in EPSG:4326
+        //console.log('gj4326Feature', gj4326Feature);
+
+        gj3857Feature = geoJsonFormat.writeFeature(wkt3857Feature,{
+            dataProjection: 'EPSG:3857',
+            featureProjection: 'EPSG:3857'
+        }); // returns GeoJSON in EPSG:3857
+        //console.log('gj3857Feature', gj3857Feature);
+
+        //console.log(geoJsonFormat.readProjection(gj4326Feature));
+
     }
 
     function getWkt3857(){
         return wktOutput3857;
+    }
+
+    function getGj4326Feature(){
+        return gj4326Feature;
+    }
+
+    function getGj3857Feature(){
+        return gj3857Feature;
     }
 
     /**
@@ -224,7 +261,7 @@ var Map = (function () {
      * @param {obj} inputExtent - inputExtent
      */
     function zoomToExt(inputExtent) {
-        console.log('zoomToFiring!')
+
         clearLayerSource(searchLayerVector);
 
         var neFeature = new ol.Feature({
@@ -244,10 +281,10 @@ var Map = (function () {
         searchLayerVector.getSource().addFeatures([neFeature, swFeature]);
 
         itemExtent = searchLayerVector.getSource().getExtent();
-        console.log('itemExtent', itemExtent);
+        //console.log('itemExtent', itemExtent);
 
         var itemExtent3857 = ol.proj.transformExtent(itemExtent, 'EPSG:4326', 'EPSG:3857');
-        console.log(itemExtent3857);
+        //console.log(itemExtent3857);
 
         setItemExtent(itemExtent, itemExtent3857);
 
@@ -264,15 +301,17 @@ var Map = (function () {
 
             wktFormat = new ol.format.WKT();
             // WKT string is in 4326 so we need to reproject it for the current map
-            searchFeatureWkt = wktFormat.readFeature(inputExtent.wkt, {
-                dataProjection: 'EPSG:4326',
-                //featureProjection: 'EPSG:3857'
-                featureProjection: 'EPSG:4326'
-            });
-            console.log('searchFeatureWkt', searchFeatureWkt);
+            //searchFeatureWkt = wktFormat.readFeature(inputExtent.wkt, {
+            //    dataProjection: 'EPSG:4326',
+            //    //featureProjection: 'EPSG:3857'
+            //    featureProjection: 'EPSG:4326'
+            //});
+            searchFeatureWkt = wktFormat.readFeature(inputExtent.wkt);
+
             searchFeatureWkt.setStyle(wktStyle);
             searchLayerVector.getSource().addFeatures([searchFeatureWkt]);
-            setWkt3857(inputExtent.wkt);
+
+            getFormats(inputExtent.wkt);
 
         }
         else {
@@ -284,7 +323,7 @@ var Map = (function () {
     }
 
     function getExtent(extent) {
-        console.log(extent);
+        //console.log(extent);
         return extent;
     }
 
@@ -296,7 +335,10 @@ var Map = (function () {
         searchLayerVector: searchLayerVector,
         getItemExtent4326: getItemExtent4326,
         getItemExtent3857: getItemExtent3857,
-        getWkt3857: getWkt3857
+        getWkt3857: getWkt3857,
+        getGj4326Feature: getGj4326Feature,
+        getGj3857Feature: getGj3857Feature
+
 
     };
 

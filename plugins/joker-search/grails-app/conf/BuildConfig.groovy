@@ -42,6 +42,7 @@ grails.project.dependency.resolution = {
         compile 'org.webjars:bootstrap:3.3.5'
         compile 'org.webjars.bower:devbridge-autocomplete:1.2.21'
         compile 'org.webjars:bootstrap-select:1.7.3-1'
+        compile 'org.webjars:zeroclipboard:2.2.0'
 
     }
 
