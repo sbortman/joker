@@ -7,6 +7,7 @@
 //= require manifest-map.js
 //= require manifest-zoom.js
 //= require map.js
+//= require webjars/zeroclipboard/2.2.0/ZeroClipboard.js
 //= require search.js
 
 //= require_self

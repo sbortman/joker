@@ -114,14 +114,18 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active in active" id="bBoxEpsg4326">
-                        %{--<br>--}%
-                        %{--<button type="button" class="btn btn-warning">Copy to Clipboard</button>--}%
+                        <br>
+                        <button id="bBox4326Copy" type="button" class="btn btn-warning">Copy to
+                        Clipboard</button>
+                        <br>
                         <br>
                         <code id="infoBbox4326"></code>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="bBoxEpsg3857">
-                        %{--<br>--}%
-                        %{--<button type="button" class="btn btn-warning">Copy to Clipboard</button>--}%
+                        <br>
+                        <button id="bBox3857Copy" type="button" class="btn btn-warning">Copy to
+                        Clipboard</button>
+                        <br>
                         <br>
                         <code id="infoBbox3857"></code>
                     </div>
@@ -204,11 +208,21 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active in active" id="geoJsonEpsg4326">
+                        <br>
+                        <button id="geoJson4326Copy" type="button" class="btn btn-warning">Copy to
+                        Clipboard</button>
+                        <br>
+                        <br>
                         <div style="height: 300px; overflow-y: auto">
                             <code id="infoGeoJson4326"></code>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="geoJsonEpsg3857">
+                        <br>
+                        <button id="geoJson3857Copy" type="button" class="btn btn-warning">Copy to
+                        Clipboard</button>
+                        <br>
+                        <br>
                         <div style="height: 300px; overflow-y: auto">
                             <code id="infoGeoJson3857"></code>
                         </div>
@@ -233,7 +247,7 @@
         });
 </asset:script>
 <asset:deferredScripts/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.js"></script>
+%{--<script src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.js"></script>--}%
 
 </body>
 </html>

@@ -134,6 +134,9 @@ webAppConfig {
     ]
     serverType: 'geoserver'
   }
+    zeroClipboard {
+        swfPath = '/joker-ui/assets/ZeroClipboard.swf'
+    }
 }
 
 

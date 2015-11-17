@@ -195,14 +195,38 @@ var Search = (function () {
         webAppConfig = initParams;
         searchByPlace();
 
-        ZeroClipboard.config({swfPath: "//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf"});
+        console.log('webApp.swfPath', webAppConfig.zeroClipboard.swfPath);
 
+        // ###### BBox
+        var clipBbox4326 = new ZeroClipboard($("#bBox4326Copy"));
+        clipBbox4326.on('copy', function (event) {
+            event.clipboardData.setData('text/plain', $('#infoBbox4326').html());
+        });
+
+        clipBbox4326.on('aftercopy', function (event) {
+            toastr.info('Data copied to clipboard...', 'Info');
+            console.log('Copied to clipboard: ' + event.data['text/plain']);
+        });
+
+        var clipBbox3857 = new ZeroClipboard($("#bBox3857Copy"));
+        clipBbox3857.on('copy', function (event) {
+            event.clipboardData.setData('text/plain', $('#infoBbox3857').html());
+        });
+
+        clipBbox3857.on('aftercopy', function (event) {
+            toastr.info('Data copied to clipboard...', 'Info');
+            console.log('Copied to clipboard: ' + event.data['text/plain']);
+        });
+
+
+        // ###### WKT
         var clipWkt4326 = new ZeroClipboard($("#wkt4326Copy"));
         clipWkt4326.on('copy', function (event) {
             event.clipboardData.setData('text/plain', $('#infoWkt4326').html());
         });
 
         clipWkt4326.on('aftercopy', function (event) {
+            toastr.info('Data copied to clipboard...', 'Info');
             console.log('Copied to clipboard: ' + event.data['text/plain']);
         });
 
@@ -212,11 +236,30 @@ var Search = (function () {
         });
 
         clipWkt3857.on('aftercopy', function (event) {
+            toastr.info('Data copied to clipboard...', 'Info');
             console.log('Copied to clipboard: ' + event.data['text/plain']);
         });
 
+        // ###### GeoJSON
+        var clipGeoJson4326 = new ZeroClipboard($("#geoJson4326Copy"));
+        clipGeoJson4326.on('copy', function (event) {
+            event.clipboardData.setData('text/plain', $('#infoGeoJson4326').html());
+        });
 
+        clipGeoJson4326.on('aftercopy', function (event) {
+            toastr.info('Data copied to clipboard...', 'Info');
+            console.log('Copied to clipboard: ' + event.data['text/plain']);
+        });
 
+        var clipGeoJson3857 = new ZeroClipboard($("#geoJson3857Copy"));
+        clipGeoJson3857.on('copy', function (event) {
+            event.clipboardData.setData('text/plain', $('#infoGeoJson3857').html());
+        });
+
+        clipGeoJson3857.on('aftercopy', function (event) {
+            toastr.info('Data copied to clipboard...', 'Info');
+            console.log('Copied to clipboard: ' + event.data['text/plain']);
+        });
 
 
 
