@@ -8,7 +8,7 @@ class UrlMappings
       }
     }
 
-    "/"( controller: 'search', view: "index" )
+    "/"( redirect: '/search/index' )
     "500"( view: '/error' )
   }
 }
